@@ -38,7 +38,8 @@ int Plus(int _Left, int _Right)
 }
 
 // 이름이 같은 변수는 선언할 수 없다.
-// _Value의 이름이 같은가????? X
+// Test함수와 main함수안의 각각의 _Value의 이름이 같은가????? X
+// 함수를 실행하는데 필요한 메모리 비용은 언제가 인자 전체 크기 + a
 void Test(int _Value)
 {
     // Test_Value
@@ -63,7 +64,7 @@ int main()
     // void는 sizeof할 수 없다. = 크기를 잴 수 없다.
     // sizeof(void);
     
-    // sizeof를 할 수 있다는 뜻은 메모리에서 4Byte를 썻다는것.
+    // Plus(20,30)을 sizeof를 할 수 있다는 뜻은 메모리에서 4Byte를 썻다는것.
     // 보이지 않는 Plus의 Return값이 있음을 알 수 있다. 
     int ReturnSize = sizeof(Plus(20, 30));
 
