@@ -16,7 +16,6 @@ int main()
     Address1 = (__int64)ValuePtr1;
 
     int a = 0;
-
     {
         int Arr[3] = {};
 
