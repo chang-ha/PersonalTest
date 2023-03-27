@@ -20,7 +20,6 @@ using MyMyInt = MMInt;
 
 int main()
 {
-
 	time_t Dtime = time(0);
 	int length = 0;
 	for (size_t i = 0; i < length; i++)

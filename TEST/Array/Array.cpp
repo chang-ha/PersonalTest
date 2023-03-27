@@ -20,7 +20,7 @@ void printDouble(int _Arr[3][5])
 	}
 }
 
-void printPtr(int (*_Arr)[2])
+void printPtr(int(*_Arr)[2])
 {
 	int(*pointer)[2] = {};
 	pointer = _Arr;
@@ -67,10 +67,10 @@ int main()
 		int(*pointer)[2] = {}; // ()를 안쓰면 int* pointer[2] << 포인터변수 2개가 들어가는 배열을 만드는 것
 		pointer = Ptr; // pointer가 가리키는 주소를 Ptr배열 시작주소로 설정
 		// (*pointer)[2] = {행렬[2]의 주소값, 행렬[2]의 주소값, 행렬[2]의 주소값}
-		
+
 		int(*Double0)[2] = pointer;
-		int(*Double1)[2] = pointer+1;
-		int(*Double2)[2] = pointer+2;
+		int(*Double1)[2] = pointer + 1;
+		int(*Double2)[2] = pointer + 2;
 
 		__int64 DoubleAdd0 = (__int64)Double0;
 		__int64 DoubleAdd1 = (__int64)Double1;

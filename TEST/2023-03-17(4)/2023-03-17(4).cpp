@@ -1,6 +1,5 @@
 ﻿// 금일 강의 내용 : printf 심화
 
-
 #include <iostream>
 
 inline int MyPrintf(const char* const _Value, ...)
@@ -10,7 +9,6 @@ inline int MyPrintf(const char* const _Value, ...)
 	Ptr += 8; // char의 sizeof가 1byte이기 때문에 +8하면 8바이트 이동
 	int* IntPtr = (int*)Ptr;
 	int Value0 = *IntPtr;
-
 
 	return 0;
 	int Count = 0;

@@ -35,11 +35,6 @@ void BreakandContinue()
         }
     }
 }
-
-
 int main()
 {
-
-
-
 }

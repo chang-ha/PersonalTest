@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{675ad0aa-ff4d-4e74-86a8-b15390a2744a}</ProjectGuid>
-    <RootNamespace>CodePractice</RootNamespace>
+    <ProjectGuid>{4c652477-0210-4a53-924a-7e10dc7edafb}</ProjectGuid>
+    <RootNamespace>Array</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CodePractice.cpp" />
+    <ClCompile Include="Array.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

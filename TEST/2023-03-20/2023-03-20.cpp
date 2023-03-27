@@ -44,7 +44,6 @@ int main()
 	// 1. 현재 시간
 	// time()
 	// time_t Test = time(0);
-	// time_t는 나중에 배운다.
 	// 2. 프로그램이 켜질 떄 주소값이 바뀌는 것을 이용
 	// int Value; , srand((int)&Value)
 

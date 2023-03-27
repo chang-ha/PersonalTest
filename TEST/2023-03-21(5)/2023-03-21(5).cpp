@@ -1,4 +1,4 @@
-﻿// 금일 강의 내용 : class
+﻿// 금일 강의 내용 : class 선언법
 
 #include <iostream>
 
@@ -20,7 +20,6 @@ class Player
 	// 1. 속성
 	// 2. 행동
 
-	
 	// 속성 (보통 명사)
 	// 속성 : 행동은 아니지만 가지고 있는 특성임
 	// ex) 카리스마, 매력 등 수치로 표한가능하다
@@ -55,6 +54,7 @@ class Player
 	}
 };
 
+// 위에서 부터 상위개념
 // 자료형 << 최상위 개념
 // 기본자료형 << int bool 등등
 // 사용자정의자료형 << 내가 만드는 Player, Monster 등등... 모든 것을 표현할 수 있다.
@@ -67,12 +67,6 @@ int main()
 	Player NewPlayer2 = Player();
 	Player Arr[3];
 
-	// ~ int Value;
+	// == int Value;
 	int Value = int();
-
-	
-	// 플레이어
-	// -> 공격력, 체력
-
-
 }

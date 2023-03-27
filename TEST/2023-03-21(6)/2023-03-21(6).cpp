@@ -1,4 +1,5 @@
-﻿
+﻿// 금일 강의 내용 : class 사용법
+
 #include <iostream>
 
 class Player
@@ -16,7 +17,7 @@ public: // 모두에게 공개한다.
     int Def = 2;
 protected: // 외부에 공개하지 않는다.
     int Hp = 100;
-private:  //
+private:  // 모두에게 공개하지 않는다.
     int Speed = 3;
 
 // 아래를 접근제한 지정자라고 부릅니다.
@@ -36,6 +37,21 @@ class Monseter
     int def = 2;
     int Hp = 100;
     int Speed = 3;
+
+public:
+    // Get, Set함수는 만들어 주는게 좋음 << 이 함수들을 통해서만 값을 조절할 수 있게 하기 위해
+    int GetAtt()
+    {
+        return Att;
+    }
+    void SetAtt(int _Att)
+    {
+        // 통로가 하나로 만들면 어디서 버그가 발생했는지 알 수 있음
+        Att = _Att;
+        if (_Att == 0)
+        {
+        }
+    }
 };
 int main()
 {
@@ -43,4 +59,11 @@ int main()
     Player NewPlayer = Player();
     // 레벨업해서 스텟이 오르면 좋겠다
     //NewPlayer.
+    
+    // 속성은 Private로 만드는게 좋음
+    // 보통 행동을 만들면 public으로 만듭니다.
+    // 그럼 공격력을 고치고 싶으면 어떻게 하느냐??
+    // class안에 get, set함수를 만들어서 사용하는게 좋음
+    // 그래야 버그를 찾기 좋음 (실력이 늘어남)
+    // 습관을 들여놓는게 중요함
 }
