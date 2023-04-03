@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{64704053-5683-4227-b090-ad547ce18950}</ProjectGuid>
+    <ProjectGuid>{5e1fe410-6195-43ac-8b0e-b0b2398ffa03}</ProjectGuid>
     <RootNamespace>My004Var</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="004. Var.cpp" />
+    <ClCompile Include="004_Var.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

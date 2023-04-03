@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="004. Var.cpp">
+    <ClCompile Include="003_MainFunction.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

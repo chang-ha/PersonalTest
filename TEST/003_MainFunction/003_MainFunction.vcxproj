@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f5e7a9f2-4c6a-4d92-840f-4fa3fd1c951b}</ProjectGuid>
+    <ProjectGuid>{0603884d-4ca5-43b1-8193-32e86bac6f75}</ProjectGuid>
     <RootNamespace>My003MainFunction</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="003. MainFunction.cpp" />
+    <ClCompile Include="003_MainFunction.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
