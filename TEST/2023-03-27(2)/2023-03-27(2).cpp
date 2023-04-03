@@ -113,7 +113,6 @@ private:
 
 
 	// char Arr[ScreenYsize][ScreenXsize] = {};
-	
 };
 
 class Player

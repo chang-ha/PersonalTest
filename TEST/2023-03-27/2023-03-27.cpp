@@ -49,6 +49,4 @@ int main()
 {
 	Player NewPlayer = Player();
 	NewPlayer.PrintStatus();
-
-
 }

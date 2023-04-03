@@ -13,7 +13,7 @@
 
 class Player
 {
-    // 클래스 내부에 존재하는 값들조차 접근하지 못하게
+    // 클래스 내부에 존재하는 값들조차 public은 접근 가능, private는 접근 불가능...
 private:
 };
 
@@ -57,15 +57,17 @@ private:
     int MonsterCount = 0;
     // static int MonsterCount;
     // 전역변수라 메모리영역에 들어가야하는데
-    // 막상해보면 에러가 나옴 ("확인할 수 없는 외부 기호"
+    // 막상해보면 에러가 나옴 ("확인할 수 없는 외부 기호")
     // 왜 나올까???
     //      >> void Print()로 이동
 
     // 몬스터만 사용할 수 있는 전역변수
+    // 실체는 없고 구상(설계)만 있음
     static int privateCount;
 };
 
 // 전역에서 초기화해줘야함
+// 실체를 둔다는 것
 int Monster::privateCount = 0;
 
 
@@ -85,7 +87,7 @@ int main()
     Monster NewMonetsr3 = Monster();
     NewMonetsr0.Print();
 
-    // 함수는 그럼 객체있어야만 사용할 수 있나??/
+    // 함수는 그럼 객체있어야만 사용할 수 있나???
     // 클래스에 속한 전역함수 또한 존재
     // static int GetSet()...
     // 함수명 앞에 static 붙여줘야함

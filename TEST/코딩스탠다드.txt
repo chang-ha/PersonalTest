@@ -8,4 +8,6 @@
    namespace AProgramger...
    using namespace AProgramger
 
-3. 
+3. 소멸자 ~B는 절대 직접호출하지 않는다
+
+4.
