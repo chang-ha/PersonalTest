@@ -8,7 +8,6 @@ void Function()
 
 // 2. 함수체
 {
-
 }
 
 // 구현이라고 하는 문법은
@@ -35,7 +34,8 @@ void Test2();
 
 // 클래스는 문법상 선언과 구현이 내부에서 혼재되어 있을수도 있고
 // 아닐수도 있는 특이한 놈..
-// 클래스 자체는 2개를 선언할 수 없습니다. Player, Player 두개 선언 불가능
+// 클래스 자체는 2개를 선언할 수 없습니다. 
+// class Player, class Player 두개 선언 불가능
 class Player
 {
 	// 일반적인 멤버변수는 이미 그자체로 선언이면서 구현입니다.
@@ -49,8 +49,8 @@ public:
 	void Damage();
 
 	// 클래스 내부에서 구현을 끝내버리면
-	// 밖에서는 구현 불가능
 	// 이미 구현을 끝낸것으로 판단
+	// 외부에서는 구현 불가능 (똑같은 함수 2개 구현한 것으로 봄)
 	void StatusRender()
 	{
 
@@ -72,6 +72,7 @@ public:
 	static const int Value = 0;
 
 	// static 멤버 변수의 경우에는 const가 안붙으면 데이터영역에 위치하게 되고
+	// 리터럴초기화 불가능
 	// 선언으로만 치게 되고 초기화 불가능
 	// Player에 속한 static 전역변수인 Value1가 있을거야....
 	static int Value1;
@@ -85,19 +86,28 @@ int Player::Value1 = 10;
 
 
 // 멤버함수의 FullName은 무조건
-// 클래스::함수이름 으로 인식해야 한다.
+// 클래스명::함수명 으로 인식해야 한다.
 Player::Player()
 {
-
 }
 
 void Player::Damage()
 {
-
 }
 
+//class Monster
+//{
+//	// 플레이어를 알아야 플레이어를 쓰지
+//	Player* NewPlayer;
+//};
 int main()
 {
+	// 이대로 사용하면 컴파일 에러발생
+	// "확인할 수 없는 외부 참조"
+	// 너가 선언만하고 실체를 만들지 않았어!!!!!!!!!!!!!!!
+	// Test0의 실체가 없어
+	Test0();
+
 	Player NewPlayer = Player();
 	// Test0();
 	int Value = NewPlayer.Value1;
@@ -106,15 +116,16 @@ int main()
 	// 메인의 입장에서는 함수안에 뭐가 있는지 중요하지 않음
 	// 중요한건 함수의 리턴이 뭔지가 중요함
 	// 리턴값이 몇 바이트인지 알아야 메모리영역을 할당해놓기 때문에
-	Test0();
+
 
 
 }
+
 // 구현부는 보통 main 아래 놔둠
-void Test0()
-{
-	Test2();
-}
+//void Test0()
+//{
+//	Test2();
+//}
 void Test1()
 {
 	Test0();

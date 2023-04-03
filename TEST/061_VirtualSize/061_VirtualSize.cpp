@@ -2,10 +2,6 @@
 
 
 #include <iostream>
-class Test
-{
-
-};
 // 다형성을 표현하는 문법인 virtual은 보통 상속과 함께합니다.
 // 다형성 == 상속??? XXXXXXXXXXXXXXXXXXXXXXXXXXX (쳐맞습니다)
 class FightUnit
@@ -52,10 +48,14 @@ void Fight(FightUnit* _Player1, FightUnit* _Player2)
 {
 
 }
+// Test의 바이트 크기는 몇일까???? 비어있으니 0인가???
+class Test
+{
+};
 int main()
 {
-	int Value = sizeof(Test);
+	int Value = sizeof(Test); // 정답은 1. 왜 ????
 
-	Test Arr[10];
+	Test Arr[10]; // 문법적으로 오류(에러)가 존재하지 않게 하기위해 최소값인 1바이트를 할당
 
 }
