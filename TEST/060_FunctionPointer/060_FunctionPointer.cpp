@@ -126,10 +126,11 @@ int main()
         Ptr1();
 
         // 인자가 있는 함수의 Function Pointer를 초기화 할때에는
-        // 인자 자리에 자료형만 작성해주면 된다. (값 넣으면 오류 발생)
+        // 인자 자리에 자료형을 작성해주면 된다. (값 넣으면 오류 발생) 
         // 혹은 그냥 함수에 인자작성하듯이 하면됨
         int (*Ptr2)(int, int) = Test2;
         int (*Ptr22)(int _Value1, int _Value2) = Test2;
+        // int (*Ptr2)(10, 20) = Test2; << 인자자리에 값으로 넣으면 오류 발생
 
         Ptr2(10, 20);
         printf_s("%d\n", Ptr2(10, 20));

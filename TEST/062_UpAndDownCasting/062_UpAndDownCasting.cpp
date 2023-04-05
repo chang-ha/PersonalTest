@@ -18,8 +18,9 @@ public:
     // 그걸 Virtual이라고 한다 ("가상함수 문법")
     // 이렇게 가상함수라는것이 만들어지게 되면
     // 자식이 이걸 새롭게 정의하지 않는다면 부모형으로 동작하고
-    // 자식이 이걸 새롭게 정의하면 자식의 형으로 동작한다
+    // 자식이 이걸 새롭게 정의하면 자식형으로 동작한다
     // 이때 정의하는 방식은 부모와 완전히 동일한 함수로 정의해야 한다.
+    // 함수이름, 받는인자가 같아야함 << 내 의견 : 인자가 다르면 함수의 오버로딩때문에 인식을 못하더라;;
     virtual int GetAtt()
     {
         return Att;
@@ -35,7 +36,8 @@ public:
         Hp -= _Damage + _Lv;
     }
 
-    // FightUnit의 GetAtt에 Player의 Lv을 더함
+
+    // FightUnit의 GetAtt가 Player에서는 다르게 동작하도록 하는 문법
     // 이를 "오버라이드 문법"이라고 한다.
     // 명시적으로 overraid했다는 것을 표현해주는것이 좋은데
     // 내용은 함수뒤에 붙여주는게 좋음
@@ -64,15 +66,16 @@ void Fight(FightUnit* _Left, FightUnit* _Right)
     // _Right->Damage(_Left->Att);
     // _Left->Damage(_Right->Att);
 
-    // 그런게 객체마다 공격력에 영향을 미치는게 다를 수가 있음 (플레이어의 데미지는 레벨에 비례)
+    // 그런데 객체마다 공격력에 영향을 미치는게 다를 수가 있음 (플레이어의 데미지는 레벨에 비례)
     // 최악의 방법은 다운캐스팅을 이용하는 것이다!!!!!!!!!!!!!
     // FightUnit을 다시 Player로 만드는 것
-    // Player* PlayerPtr = (Player*)_Left;
-    //
+    // Player* PlayerPtr = (Player*)_Left; << FightUnit* _Left를 Player(자식클래스)로 다운캐스팅
+    
     // _Right->PlayerDamage(_Left->Att);
     // _Left->Damage(_Right->Att);
 
-    // 만약 왼쪽에 몬스터가 들어오면 몬스터가 플레이어로 바뀜
+    // 만약 왼쪽에 몬스터가 들어오면 몬스터가 플레이어로 바뀜 
+    //        << Moster정보를 가지고 있던 FightUnit*이 Player*로 바뀌는 이상한 현상이 되어버림
     // 그러면 무슨일이 벌어질 지 알수가 없고
     // 이 방법은 사용하지 않는다!!!!!!!!!!!!!!!!
 
