@@ -1,46 +1,34 @@
 ﻿// 067_Template
 
 
-
 #pragma once
 
 
-typedef int Datatype;
+typedef int DataType;
 
 class GameEngineArray
 {
 public:
-	// constructer destructer
-	GameEngineArray(size_t _Value)
-		: ArrPtr(new Datatype[_Value])
-		, ArrCount(_Value)
-	{
-		// ArrPtr = new int[_Value];
-	}
-
-	~GameEngineArray()
-	{
-		// 생성자에서 만들어준 배열은 소멸자에서 삭제한다
-		// 안전한 삭제 방법으로
-		if (nullptr != ArrPtr)
-		{
-			delete[] ArrPtr;
-			ArrPtr = nullptr;
-		}
-	}
-
 	// delete function
 	GameEngineArray(const GameEngineArray& _Ohter) = delete;
 	GameEngineArray(GameEngineArray&& _Ohter) noexcept = delete;
 	GameEngineArray& operator=(GameEngineArray&& _Other) noexcept = delete;
 
-	GameEngineArray& operator=(const GameEngineArray& _Other)
+	// constructer destructer
+	GameEngineArray(size_t _Value)
+		: ArrPtr(new DataType[_Value])
+		, ArrCount(_Value)
 	{
-		ArrCount = _Other.ArrCount;
-		ArrPtr = _Other.ArrPtr;
 
+	}
 
-		return *this;
+	~GameEngineArray()
+	{
+		if (nullptr != ArrPtr)
+		{
+			delete[] ArrPtr;
+			ArrPtr = nullptr;
+		}
 	}
 
 	size_t Count()
@@ -48,32 +36,48 @@ public:
 		return ArrCount;
 	}
 
-	Datatype& operator[](size_t _Index)
+	DataType& operator[](size_t _Index) const
 	{
 		return ArrPtr[_Index];
 	}
 
-	void ReSize(int _Value)
+	GameEngineArray& operator=(const GameEngineArray& _Other)
 	{
-		// 기존의 할당된 배열을 섣불리 지우면 안됨
-		// 기존의 있던 값에서 현재의 배열이 복사한 다음 삭제해야 한다.
-		// 이전 배열을 지워버림 (Leak방지)
+		ReSize(_Other.ArrCount);
+		for (size_t i = 0; i < _Other.ArrCount; i++)
+		{
+			ArrPtr[i] = _Other[i];
+		}
+		return *this;
+	}
+
+
+	void ReSize(int _Count)
+	{
+		DataType* NewPtr = new DataType[_Count];
+		int CopySize = _Count < ArrCount ? _Count : ArrCount;
+
+		for (size_t i = 0; i < CopySize; i++)
+		{
+			NewPtr[i] = ArrPtr[i];
+		}
+
 		if (nullptr != ArrPtr)
 		{
 			delete[] ArrPtr;
 			ArrPtr = nullptr;
 		}
-
-		ArrPtr = new Datatype[_Value];
-		ArrCount = _Value;
+		ArrPtr = NewPtr;
+		ArrCount = _Count;
 	}
+
+
 protected:
 
 private:
 	size_t ArrCount;
-	Datatype* ArrPtr = nullptr;
+	DataType* ArrPtr = nullptr;
 };
-
 
 // Function은 완전히 동일한 함수(오버로딩 개념과 유사)
 //void Function(int _Value)
@@ -116,12 +120,20 @@ void Function(char _Value)
 	printf_s("%c\n", _Value);
 }
 
-// class Bullet;
 template<typename DataType>
 class Test
 {
 public:
 	DataType Value;
+};
+
+class Bullet
+{
+public:
+	void Update()
+	{
+
+	}
 };
 #include <iostream>
 int main()
@@ -137,6 +149,7 @@ int main()
 	// 이 템플릿이란 문법은
 	// 특정 함수나 특정 클래스에서 자료형만 바뀐 완전히 동일한 함수나 완전히 동일한 클래스를
 	// 만들고 싶을때 사용하는 문법입니다.
+	// 그치만 Template를 난무하면 컴파일시간이 어마어마하게 길어짐
 
 	// 템플릿 함수의 경우 사용법
 	{
@@ -152,13 +165,16 @@ int main()
 		Function<int>('a');
 	}
 
+	// template에서 에러 발생시 꿀팁
+	// template<> (특수화)를 하나 더 만들어서
+	// 에러가 나는지 확인해보기 
 	{
 		Test<int> NewIntArr;
 		NewIntArr.Value = 10;
 
 		Test<Bullet> NewBulletArr;
 		// 이제는 Test가 Bullet이니까 안됨
-		// NewBulletArr.Value = 10;
+		NewBulletArr.Value.Update();
 		
 		// 클래스는 인자추론이 안됨
 		// 지역변수들의 크기를 다 알아야하기 때문에

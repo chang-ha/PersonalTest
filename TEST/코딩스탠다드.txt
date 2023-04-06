@@ -10,4 +10,31 @@
 
 3. 소멸자 ~B는 절대 직접호출하지 않는다
 
-4.
+4. virtual 함수를 사용하면 꼭 override를 붙여주기
+부모코드
+virtual void Test()
+{
+
+}
+
+자식코드
+void Test() override
+{
+
+}
+
+5. template 특수화를 하면 꼭 template<>를 붙이기
+
+template<typename DataType>
+void Test(DataType _Value)
+{
+
+}
+
+template<>
+void Test(char _Value)
+{
+
+}
+
+6.

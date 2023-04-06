@@ -20,13 +20,13 @@ int main()
 	{
 		// GameEngineArray Array0;
 		// GameEngineArray Array1;
-
-		// 내가 막아놔서 안되는 것
-		// operator = 는 delete해놔서
+		
+		// 내가 만든 GameEngineArray에서는 되나?? X
+		// 내가 막아놔서 안되는 것 << operator = 는 delete해놔서
 		// 그래서 구현할 것임
 		// Array0 = Array1;
 
-		GameEngineArray Array0(10); // == GameEngineArray Array0 = GameEngineArray(20);
+		GameEngineArray Array0(10); // == GameEngineArray Array0 = GameEngineArray(10);
 		GameEngineArray Array1();
 
 		// 이전의 20개 배열은 잃어버림 == Leak 발생 << 그래서 함수안에서 delete를 만들어 줘야함
@@ -41,7 +41,7 @@ int main()
 		}
 
 		for (size_t i = 0; i < Array0.Count(); i++)
-		{
+		{ 
 			printf_s("%d\n", Array0[i]);
 		}
 	}
@@ -64,6 +64,7 @@ int main()
 			Array0[i] = i;
 		}
 
+		// 숙제 4.	
 		// 완전히 동일한 배열이 되게 만들어주세요
 		// Array1이 10개짜리 배열이 되고 안에 값도 0~9가 들어가 있어야함
 		Array1 = Array0;

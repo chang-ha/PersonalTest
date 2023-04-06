@@ -4,13 +4,20 @@
 void TestReference(int& _Value);
 // 중요한 습관들
 #include <iostream> // iosteam안에 crtdbg.h가 들어있음
+
+void MyDelete(int* Ptr)
+{
+	delete  Ptr;
+	Ptr = nullptr;
+}
 void main()
 {
 	// 힙을 사용한다면 맨 처음에 걸어놓는 습관을 들이자
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	// 중복할당 예시
 	{
+		// 중복할당 예시
 		int* Newint = new int();
+		// 이전의 int는 잃어버리게 되버림
 		Newint = new int();
 	}
 
@@ -23,7 +30,7 @@ void main()
 
 	{
 		// new는 운영체제에 부탁하는것이다.
-		// 어떤 일이 있었건 운영체제가 못하면 null을 리턴함
+		// 어떤 일이 있었건 운영체제가 할당을 못하면 null을 리턴함
 		int* Newint = new int();
 
 		// 습관을 들여놔야함
@@ -39,7 +46,7 @@ void main()
 		delete Newint;
 	}
 
-	// 지운거 또 지우면 위험함
+	// 지운거 또 지우면 터짐
 	// 댕글링 포인터라고 합니다.
 	{
 		int* Newint = new int();
@@ -50,7 +57,7 @@ void main()
 	{
 		int* Newint = new int(10);
 		
-		// 안전한 삭제
+		// 안전한 삭제 (save delete)
 		if (nullptr != Newint)
 		{
 			delete Newint;
@@ -59,16 +66,29 @@ void main()
 		}
 	}
 
+	{
+		// 함수로 만들면 적용이 될까????
+		int* NewPtr = new int();
+		// 함수인자로 NewPtr을 넣어도
+		// 지역변수 개념으로 인해 NewPtr을 지우고 nullptr로 만들어도
+		// main에 있는 NewPtr은 변하지 않음
+		MyDelete(NewPtr);
+		if (nullptr != NewPtr)
+		{
+			operator delete(NewPtr);
+			NewPtr = nullptr;
+		}
+	}
 	// null Reference Exception
 	// Reference가 null인데 참조하면 터짐
 	// 게임이 튕긴다고한다.
 	{
 		int* Test = nullptr;
-		Reference(*Test);
+		//TestReference(*Test);
 	}
 }
 
-void Reference(int& _Value)
+void TestReference(int& _Value)
 {
 	_Value = 0;
 }

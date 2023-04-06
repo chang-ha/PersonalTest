@@ -28,7 +28,7 @@ int main()
 	// new int()는 가만히 내버려두면 잃어버림 << 절대로 못씀
 	// 받지 않으면 잃어버렸다고 표현함
 	// new int는 한번 무조건 받아야함 (주소값으로 받아야함)
-	// 그래서 힙영역은 포인터로만 받을수 없음
+	// 그래서 힙영역은 포인터로만 받을수 있음
 	int* Ptr = new int(); // == operator new() int();
 	*Ptr = 20;
 
@@ -51,6 +51,7 @@ int main()
 	//{
 
 	//}
+	// 내 의견 : class를 delete할 시 소멸자함수도 같이 호출된다.
 	delete PtrMonster;
 
 	// Monster& PtrMonster = new Monster();
