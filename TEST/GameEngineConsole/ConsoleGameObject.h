@@ -40,7 +40,8 @@ public:
 		UpdateValue = false;
 	}
 
-	void Render();
+	virtual void Update();
+	virtual void Render();
 
 protected:
 	int2 Pos;

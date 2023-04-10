@@ -6,29 +6,27 @@ ConsoleGameScreen ConsoleGameScreen::MainScreen;
 void ConsoleGameScreen::ScreenClear()
 {
 	system("cls");
-	for (size_t y = 0; y < ScreenYSize; y++)
+	for (size_t y = 0; y < Size.Y; y++)
 	{
-		for (size_t x = 0; x < ScreenXSize; x++)
+		for (size_t x = 0; x < Size.X; x++)
 		{
-			Arr[y][x] = 'a';
+			ArrScreen[y][x] = 'a';
 		}
 	}
 }
 
 void ConsoleGameScreen::ScreenPrint() const
 {
-	for (size_t y = 0; y < ScreenYSize; y++)
+	for (size_t y = 0; y < Size.Y; y++)
 	{
-		for (size_t x = 0; x < ScreenXSize; x++)
+		for (size_t x = 0; x < Size.X; x++)
 		{
-			// Arr[y][x] = 'b';
-			printf_s("%c", Arr[y][x]);
+			printf_s("%c", ArrScreen[y][x]);
 		}
 		printf_s("\n");
 	}
 }
 
-// 이녀석을 무조건 사용해서 플레이어가 바깥으로 못나가게 만드세요.
 bool ConsoleGameScreen::IsScreenOver(const int2& _Pos) const
 {
 	if (0 > _Pos.X)
@@ -41,12 +39,12 @@ bool ConsoleGameScreen::IsScreenOver(const int2& _Pos) const
 		return true;
 	}
 
-	if (ScreenXSize <= _Pos.X)
+	if (Size.X <= _Pos.X)
 	{
 		return true;
 	}
 
-	if (ScreenYSize <= _Pos.Y)
+	if (Size.Y <= _Pos.Y)
 	{
 		return true;
 	}
@@ -61,7 +59,7 @@ void ConsoleGameScreen::SetScreenCharacter(const int2& _Pos, char _Ch)
 		return;
 	}
 
-	Arr[_Pos.Y][_Pos.X] = _Ch;
+	ArrScreen[_Pos.Y][_Pos.X] = _Ch;
 }
 
 
@@ -72,5 +70,42 @@ ConsoleGameScreen::ConsoleGameScreen()
 
 int2 ConsoleGameScreen::GetScreenSize()
 {
-	return int2{ ScreenXSize, ScreenYSize };
+	return Size;
+}
+
+void ConsoleGameScreen::SetScreenSize(int2 _Size)
+{
+	Size = _Size;
+	// ArrScreen[y][x];
+	// char**
+	// ArrScreen[y][x] = new char* Arr[y];
+
+	ArrScreen = new char* [Size.Y];
+
+	for (size_t i = 0; i < Size.Y; i++)
+	{
+		// ArrScreen == char**
+		// ArrScreen[i] == char*
+		ArrScreen[i] = new char[Size.X];
+	}
+
+}
+
+ConsoleGameScreen::~ConsoleGameScreen()
+{
+	// 지워지는건 역순
+	for (size_t i = 0; i < Size.Y; i++)
+	{
+		if (nullptr == ArrScreen[i])
+		{
+			continue;
+		}
+		delete[] ArrScreen[i];
+		ArrScreen[i] = nullptr;
+	}
+	if (nullptr == ArrScreen)
+	{
+		delete[] ArrScreen;
+		ArrScreen = nullptr;
+	}
 }

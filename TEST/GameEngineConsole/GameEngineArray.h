@@ -1,26 +1,30 @@
 #pragma once
-
-//typedef int DataType;
 #include <GameEngineBase/GameEngineDebug.h>
+// #include <Program Files/Adobe/Adobe Creative Cloud Experience/>
 
-template <typename DataType>
+template<typename DataType>
 class GameEngineArray
 {
 public:
-	// delete function
-	GameEngineArray(const GameEngineArray& _Ohter) = delete;
-	GameEngineArray(GameEngineArray&& _Ohter) noexcept = delete;
+	// delete Function
+	// GameEngineArray(const GameEngineArray& _Other) = delete;
+	GameEngineArray(GameEngineArray&& _Other) noexcept = delete;
 	GameEngineArray& operator=(GameEngineArray&& _Other) noexcept = delete;
 
-	// constructer destructer
+	GameEngineArray()
+	{
+	}
+
+
+	// constrcuter destructer
 	GameEngineArray(size_t _Value)
-		: ArrPtr(new DataType[_Value])
-		, ArrCount(_Value)
 	{
 		if (0 >= _Value)
 		{
-			MsgBoxAssert("크기가 0인 배열은 만들수 없습니다");
+			MsgBoxAssert("0크기의 배열은 만들수 없습니다.");
 		}
+
+		ReSize(_Value);
 	}
 
 	~GameEngineArray()
@@ -30,6 +34,17 @@ public:
 			delete[] ArrPtr;
 			ArrPtr = nullptr;
 		}
+	}
+
+	GameEngineArray& operator=(const GameEngineArray& _Other)
+	{
+		ReSize(_Other.ArrCount);
+		for (size_t i = 0; i < _Other.ArrCount; i++)
+		{
+			ArrPtr[i] = _Other[i];
+		}
+
+		return *this;
 	}
 
 	size_t Count()
@@ -42,21 +57,10 @@ public:
 		return ArrPtr[_Index];
 	}
 
-	GameEngineArray& operator=(const GameEngineArray& _Other)
+	void ReSize(size_t _Value)
 	{
-		ReSize(_Other.ArrCount);
-		for (size_t i = 0; i < _Other.ArrCount; i++)
-		{
-			ArrPtr[i] = _Other[i];
-		}
-		return *this;
-	}
-
-
-	void ReSize(int _Count)
-	{
-		DataType* NewPtr = new DataType[_Count];
-		int CopySize = _Count < ArrCount ? _Count : ArrCount;
+		DataType* NewPtr = new DataType[_Value];
+		size_t CopySize = _Value < ArrCount ? _Value : ArrCount;
 
 		for (size_t i = 0; i < CopySize; i++)
 		{
@@ -68,14 +72,16 @@ public:
 			delete[] ArrPtr;
 			ArrPtr = nullptr;
 		}
-		ArrPtr = NewPtr;
-		ArrCount = _Count;
-	}
 
+		ArrPtr = NewPtr;
+		ArrCount = _Value;
+	}
 
 protected:
 
 private:
-	size_t ArrCount;
+	size_t ArrCount = 0;
 	DataType* ArrPtr = nullptr;
+
 };
+

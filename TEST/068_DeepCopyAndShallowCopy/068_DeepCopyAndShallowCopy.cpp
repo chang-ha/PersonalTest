@@ -1,7 +1,6 @@
 ﻿// 068_DeepCopyAndShallowCopy
 
 
-// 금일 영상 꼭 보기
 #include <iostream>
 #include "GameEngineArray.h"
 
