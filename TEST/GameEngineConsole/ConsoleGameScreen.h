@@ -1,7 +1,7 @@
 #pragma once
 #include "ConsoleGameMath.h"
 #include "GameEngineArray.h"
-
+#include <vector>
 class ConsoleGameScreen
 {
 public:
@@ -24,8 +24,9 @@ public:
 protected:
 
 private:
+	std::vector<std::vector<char>> ArrScreen;
 
-	char** ArrScreen;
+	//char** ArrScreen;
 
 	int2 Size;
 	// char의 배열을 가진 또 다른 배열

@@ -6,13 +6,14 @@
 #include "Player.h"
 #include "Bomb.h"
 #include "GameEnum.h"
-#include "ConsoleObjectManager.h"
-
+#include <GameEngineConsole/ConsoleObjectManager.h>
+#include "Item.h"
+#include <GameEngineBase/GameEngineRandom.h>
 
 int main()
 {
 	GameEngineDebug::LeckCheck();
-	int2 ScreenSize = { 20, 10 };
+	int2 ScreenSize = { 5, 5 };
 	ConsoleGameScreen::GetMainScreen().SetScreenSize(ScreenSize);
 
 	// 업캐스팅
@@ -27,13 +28,16 @@ int main()
 	// 2번 그룹에 속한다
 	//CreateConsoleObject<Monster>(2);
 
+	ConsoleObjectManager::CreateConsoleObject<Item>(ObjectOrder::Item);
+	ConsoleObjectManager::CreateConsoleObject<Item>(ObjectOrder::Item);
+
 	while (Player::IsGameUpdate)
 	{
 		ConsoleObjectManager::ConsoleAllObjectUpdate();
 		ConsoleObjectManager::ConsoleAllObjectRender();
+		ConsoleObjectManager::ConsoleAllObjectRelease();
 
-
-		Sleep(200);
+		Sleep(200); 
 	}
 	ConsoleObjectManager::ConsoleAllObjectDelete();
 

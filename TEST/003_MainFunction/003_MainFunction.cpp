@@ -13,7 +13,7 @@
 int main() // int main() 을 진입점으로 하기로 모두가 합의함 (바꿀수는 있지만 바꿀필요가 없음)
 { // 함수의 시작
     // cout은 어려우니 나중에 설명 우선은 printf부터 설명함
-    std::cout << "Hello World!\n";
+    // std::cout << "Hello World!\n";
 
 
 } // 함수의 끝

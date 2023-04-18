@@ -1,6 +1,6 @@
 ﻿#include<iostream>
 
-void printSingel(char* _first)
+void printSingle(char* _first)
 {
 	for (int i = 0; i < 5; i++)
 	{
@@ -9,7 +9,7 @@ void printSingel(char* _first)
 }
 
 void printDouble(int _Arr[3][5])
-{
+{ 
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 5; j++)
@@ -43,7 +43,7 @@ int main()
 			char chr = (char)i;
 			first[i - 97] = chr;
 		}
-		//printSingel(first);
+		//printSingle(first);
 
 		int Arr[3][5] = {};
 

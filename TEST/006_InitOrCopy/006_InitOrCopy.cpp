@@ -1,4 +1,4 @@
-﻿// 006_InitOrCopy
+﻿// 006_InitOrCopy (초기화 or 대입)
 
 int main()
 {

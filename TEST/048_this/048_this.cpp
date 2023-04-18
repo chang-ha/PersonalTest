@@ -8,7 +8,7 @@ public:
 	Player()
 	{
 	}	    //아래 내용이 생략되어 있음
-	void Damage(/*Player* const this*/ int _Att)
+	void Damage(/*Player* const this, */ int _Att)
 	{
 		__int64 Address = (__int64)&Hp;
 		// 눈에 보이지 않지만 멤버함수에는

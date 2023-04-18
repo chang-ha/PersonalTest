@@ -1,11 +1,13 @@
 #pragma once
-#include <GameEngineConsole/GameEngineArray.h>
-#include <GameEngineConsole/ConsoleGameObject.h>
+#include "GameEngineArray.h"
+#include "ConsoleGameObject.h"
+#include <vector>
+#include <list>
 
 class ConsoleObjectManager
 {
 private:
-	static GameEngineArray<GameEngineArray<ConsoleGameObject*>> AllObject;
+	static std::vector<std::list<ConsoleGameObject*>> AllObject;
 public:
 	template<typename ObjectType>
 	// Order는 그룹의 순서
@@ -14,24 +16,22 @@ public:
 	// 폭탄 그룹이 있다.
 	static ObjectType* CreateConsoleObject(int _Order)
 	{
-		//ObjectType* NewObject = new ObjectType();
+		// ObjectType* NewObject = new ObjectType();
 
 		// AllObject의 자료형은 GameEngineArray<ConsoleGameObject*>
 
 		// &안붙이면 완전히 새로운 GameEngineArray가 생성됨
 		// AllObject는 처음에 비어있는 배열
 		// 0번 그룹을 만들어서 넣기 위해서 AllObject배열의 크기를 늘려야함
-		if (_Order >= AllObject.Count())
+		if (_Order >= AllObject.size())
 		{
-			AllObject.ReSize(_Order + 1);
+			AllObject.resize(_Order + 1);
 		}
-		GameEngineArray<ConsoleGameObject*>& Group = AllObject[_Order];
+		std::list<ConsoleGameObject*>& Group = AllObject[_Order];
 
 		ObjectType* NewObject = new ObjectType();
 
-		Group.ReSize(Group.Count() + 1);
-
-		Group[Group.Count() - 1] = NewObject;
+		Group.push_back(NewObject);
 
 		return NewObject;
 	}
@@ -46,12 +46,20 @@ public:
 
 	static void ConsoleAllObjectUpdate();
 	static void ConsoleAllObjectRender();
+	// object를 delete할 때는 만든놈이 지우는 게 제일 좋음
+	static void ConsoleAllObjectRelease();
 	static void ConsoleAllObjectDelete();
+	template<typename EnumType>
+	static std::list<ConsoleGameObject*>& GetGroup(EnumType _Order)
+	{
+		return AllObject[(int)_Order];
+	}
 
-	static GameEngineArray<ConsoleGameObject*>& GetGroup(int _Order)
+	static std::list<ConsoleGameObject*>& GetGroup(int _Order)
 	{
 		return AllObject[_Order];
 	}
+
 
 private:
 	// constructer destructer
@@ -65,8 +73,6 @@ private:
 	ConsoleObjectManager& operator=(ConsoleObjectManager&& _Other) noexcept = delete;
 
 protected:
-
-private:
 
 };
 

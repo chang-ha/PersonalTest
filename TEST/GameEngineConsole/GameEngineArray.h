@@ -7,7 +7,7 @@ class GameEngineArray
 {
 public:
 	// delete Function
-	// GameEngineArray(const GameEngineArray& _Other) = delete;
+	GameEngineArray(const GameEngineArray& _Other) = delete;
 	GameEngineArray(GameEngineArray&& _Other) noexcept = delete;
 	GameEngineArray& operator=(GameEngineArray&& _Other) noexcept = delete;
 

@@ -7,7 +7,7 @@
 // 행동 하나하나가 다 데이터
 
 
-// C++는 객체지향언어
+// C++는 객체지향언어를 추가
 // 나는 그저 플레이어를 만들고 싶은 것
 // 여러 데이터를 묶어서 하나의 객체로 보고 싶음
 // 캡슐화, 추상화
@@ -19,7 +19,7 @@
 
 // 특정대상이 다른 대상을 때린다
 void Damage
-(const char* const _AttName,    // 때리는 쪽의 이름
+(const char* const _AttName,        // 때리는 쪽의 이름
     const char* const _DefName,     // 맞는 쪽의 이름
     const int& _Att,                // 떄리는 쪽의 공격력
     int& _HP)                       // 맞는 쪽의 체력

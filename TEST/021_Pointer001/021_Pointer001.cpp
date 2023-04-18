@@ -16,7 +16,6 @@ int main()
     Address0 = (__int64)ValuePtr0;
     Address1 = (__int64)ValuePtr1;
 
-    int a = 0;
     {
         int Arr[3] = {};
 
@@ -31,8 +30,5 @@ int main()
         Address0 = (__int64)ValuePtr0;
         Address1 = (__int64)ValuePtr1;
         Address2 = (__int64)ValuePtr2;
-
-        int a = 0;
-
     }
 }

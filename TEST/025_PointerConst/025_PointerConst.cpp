@@ -10,7 +10,7 @@ int main()
 		// const int Value; << 에러코드
 	}
 	{
-		// int 와 cdonst int는 전혀 다른 자료형임!!!!
+		// int 와 const int는 전혀 다른 자료형임!!!!
 		int Value = 10;
 		int Value1 = 20;
 		int* Ptr = &Value;

@@ -80,13 +80,12 @@ void ConsoleGameScreen::SetScreenSize(int2 _Size)
 	// char**
 	// ArrScreen[y][x] = new char* Arr[y];
 
-	ArrScreen = new char* [Size.Y];
-
+	ArrScreen.resize(Size.Y);
 	for (size_t i = 0; i < Size.Y; i++)
 	{
 		// ArrScreen == char**
 		// ArrScreen[i] == char*
-		ArrScreen[i] = new char[Size.X];
+		ArrScreen[i].resize(Size.X);
 	}
 
 }
@@ -94,18 +93,18 @@ void ConsoleGameScreen::SetScreenSize(int2 _Size)
 ConsoleGameScreen::~ConsoleGameScreen()
 {
 	// 지워지는건 역순
-	for (size_t i = 0; i < Size.Y; i++)
-	{
-		if (nullptr == ArrScreen[i])
-		{
-			continue;
-		}
-		delete[] ArrScreen[i];
-		ArrScreen[i] = nullptr;
-	}
-	if (nullptr == ArrScreen)
-	{
-		delete[] ArrScreen;
-		ArrScreen = nullptr;
-	}
+	//for (size_t i = 0; i < Size.Y; i++)
+	//{
+	//	if (nullptr == ArrScreen[i])
+	//	{
+	//		continue;
+	//	}
+	//	delete[] ArrScreen[i];
+	//	ArrScreen[i] = nullptr;
+	//}
+	//if (nullptr == ArrScreen)
+	//{
+	//	delete[] ArrScreen;
+	//	ArrScreen = nullptr;
+	//}
 }
