@@ -19,6 +19,13 @@ public:
 		Hp = _Value;
 	}
 
+	// 멤버함수 뒤의 const는 멤버변수들의 값만 안바꾸는 것이지
+	// 들어오는 인자의 값을 안바꾸는것은 아님 << 이를 원하면 인자 앞에 const를 붙이기
+	void SetAtt(int& _Value) const
+	{
+		_Value = 30;
+	}
+
 	// 멤버함수뒤에는 const를 붙일 수 있다.
 
 	// 함수뒤에 const를 붙이면

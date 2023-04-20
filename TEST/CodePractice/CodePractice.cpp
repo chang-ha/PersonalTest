@@ -1,26 +1,11 @@
-﻿
-class A
+﻿class A
 {
-	friend B;
-	void ValueChange()
-	{
-		NewB->ValueB = 10;
-	}
-private:
-	int ValueA = 1;
-	B* NewB;
+	static const int Value = 0;
 };
-class B
-{
-	void ValueChange()
-	{
-		NewA->ValueA = 10;
-	}
-private:
-	int ValueB = 2;
-	A* NewA;
-};
+
+#include <iostream>
 int main()
 {
-
+	A newA;
+	printf_s("%d", sizeof(newA));
 }

@@ -20,11 +20,6 @@ void Test(const A& _Other)
 	}
 	int a = 0;
 }
-//
-//void Test(A _Other)
-//{
-//
-//}
 
 class NewTest 
 {
@@ -138,6 +133,7 @@ int main()
 		// 메모리를 특정할 수 없음
 		// 이것을 받아서 쓸 수 있게 만들어주는 &&
 		int&& Test3 = Function();
+		int Test4 = Function();
 	}
 
 	{

@@ -16,7 +16,7 @@ void Function(int _Value)
 
 void Function(short _Value)
 {
-	// 얘 이름은 Function int
+	// 얘 이름은 Function short
 	printf_s("void Function(short Value)");
 }
 
