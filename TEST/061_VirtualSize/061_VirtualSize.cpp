@@ -43,7 +43,7 @@ void FightScene(Player* _Player, Monster* _Monster)
 
 }
 
-// 그래서 아래처럼 함수를 작성
+// 그래서 아래처럼 함수를 작성 (업캐스팅을 통해 인자를 받음)
 void Fight(FightUnit* _Player1, FightUnit* _Player2)
 {
 

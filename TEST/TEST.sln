@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "참고자료", "참고자�
 	ProjectSection(SolutionItems) = preProject
 		구조Level의 의미.txt = 구조Level의 의미.txt
 		단축키.txt = 단축키.txt
-		메모리영.txt = 메모리영.txt
+		메모리영역.txt = 메모리영역.txt
 		용어설명.txt = 용어설명.txt
 		컴파일과정.txt = 컴파일과정.txt
 		코딩스탠다드.txt = 코딩스탠다드.txt
@@ -283,12 +283,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RValueRef", "RValueRef\RVal
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyString", "MyString\MyString.vcxproj", "{030D7766-5A40-4ABD-AE77-00CE2C41F7E0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2023-04-19, 20", "2023-04-19, 20", "{7DAC065C-DB7B-42C3-AC18-7E615E9F3198}"
-	ProjectSection(SolutionItems) = preProject
-		GameEngineMap.txt = GameEngineMap.txt
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2023-04-19, 20, 21", "2023-04-19, 20, 21", "{7DAC065C-DB7B-42C3-AC18-7E615E9F3198}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngineMap", "GameEngineMap\GameEngineMap.vcxproj", "{FEDAD7FE-94DA-4EFF-96BB-6A267C1F42A9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngineMap(Temp)", "GameEngineMap(Temp)\GameEngineMap(Temp).vcxproj", "{BF24E0D7-0839-41C7-A83E-5843EFD09E00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2023-04-24", "2023-04-24", "{BA454F97-680D-4CCD-B306-2F1C9E628261}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1098,6 +1099,14 @@ Global
 		{FEDAD7FE-94DA-4EFF-96BB-6A267C1F42A9}.Release|x64.Build.0 = Release|x64
 		{FEDAD7FE-94DA-4EFF-96BB-6A267C1F42A9}.Release|x86.ActiveCfg = Release|Win32
 		{FEDAD7FE-94DA-4EFF-96BB-6A267C1F42A9}.Release|x86.Build.0 = Release|Win32
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00}.Debug|x64.ActiveCfg = Debug|x64
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00}.Debug|x64.Build.0 = Debug|x64
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00}.Debug|x86.ActiveCfg = Debug|Win32
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00}.Debug|x86.Build.0 = Debug|Win32
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00}.Release|x64.ActiveCfg = Release|x64
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00}.Release|x64.Build.0 = Release|x64
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00}.Release|x86.ActiveCfg = Release|Win32
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1202,6 +1211,7 @@ Global
 		{12730D1B-CBE1-44FC-A334-ADD83D173B95} = {929D45A6-18DA-4928-AFF9-CA2261F4EF4F}
 		{030D7766-5A40-4ABD-AE77-00CE2C41F7E0} = {8633ADC6-3F02-48EA-B087-EE57C3AF127A}
 		{FEDAD7FE-94DA-4EFF-96BB-6A267C1F42A9} = {929D45A6-18DA-4928-AFF9-CA2261F4EF4F}
+		{BF24E0D7-0839-41C7-A83E-5843EFD09E00} = {7DAC065C-DB7B-42C3-AC18-7E615E9F3198}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D09BCE42-B141-464B-AB3E-931E2B1B3E73}

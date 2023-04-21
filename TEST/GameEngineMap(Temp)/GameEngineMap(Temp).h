@@ -1,7 +1,8 @@
 #pragma once
 #include <GameEngineBase/GameEngineDebug.h>
+typedef int KeyType;
+typedef int ValueType;
 
-template <typename KeyType, typename ValueType>
 class GameEnginepair
 {
 public:
@@ -18,7 +19,6 @@ public:
 	}
 };
 
-template<typename KeyType, typename ValueType>
 class GameEngineMap
 {
 public:
@@ -28,11 +28,31 @@ public:
 		MapNode* Parent = nullptr;
 		MapNode* LeftChild = nullptr;
 		MapNode* RightChild = nullptr;
-		GameEnginepair<KeyType, ValueType> Pair;
+		GameEnginepair Pair;
 
 		bool IsLeaf()
 		{
 			return nullptr == LeftChild && nullptr == RightChild;
+		}
+
+		// 내가 지워지기 전에 해야할 일
+		void Release()
+		{
+			if (nullptr == Parent)
+			{
+				return;
+			}
+
+			if (this == Parent->LeftChild)
+			{
+				Parent->LeftChild = nullptr;
+				return;
+			}
+			if (this == Parent->RightChild)
+			{
+				Parent->RightChild = nullptr;
+				return;
+			}
 		}
 
 		void ChangeChild(MapNode* _OldChild, MapNode* _NewChild)
@@ -56,6 +76,42 @@ public:
 				}
 				return;
 			}
+		}
+
+
+		void Detach()
+		{
+			// 5를 기준 << Detach할 떄 
+			// 5의 부모노드인 6에게 LeftNode로 5의 자식노드인 4를 붙여줬어야 했는데
+			// 5의 부모노드인 6에게 LeftNode로 5의 RightNode를 붙여주었지만 nullptr이여서 사실상 6의 LeftNode = nullptr이 되어버림
+
+			// 수정
+			// 내 의견
+			// this == DetachParent->LeftChild란 소리는
+			// this가 Parent의 Left->MaxNode()란 뜻
+			// == this의 RightNode가 존재하지 않음(내가 가장 오른쪽)
+			MapNode* DetachParent = Parent;
+			MapNode* DetachLeftChild = LeftChild;
+			MapNode* DetachRightChild = RightChild;
+			// this == DetachParent->LeftChild << this == Parent->LeftChild->MaxNode() << 오른쪽 자식은 무조건 없음
+			if (nullptr != DetachParent && this == DetachParent->LeftChild)
+			{
+				DetachParent->LeftChild = DetachLeftChild;
+				if (nullptr != DetachLeftChild)
+				{
+					DetachLeftChild->Parent = DetachParent;
+				}
+			}
+			// this == DetachParent->RightChild << this == Parent->RightChild->MinNode() << 왼쪽 자식은 무조건 없음
+			else if (nullptr != DetachParent && this == DetachParent->RightChild)
+			{
+				DetachParent->RightChild = DetachRightChild;
+				if (nullptr != DetachRightChild)
+				{
+					DetachRightChild->Parent = DetachParent;
+				}
+			}
+
 		}
 
 		MapNode* OverParentNode()
@@ -194,60 +250,6 @@ public:
 			// 같으면 함수를 호출중인 노드의 iterator를 리턴
 			return this;
 		}
-
-		void FirstOrder()
-		{
-			std::cout << Pair.first << std::endl;
-			if (nullptr != LeftChild)
-			{
-				LeftChild->FirstOrder();
-			}
-			if (nullptr != RightChild)
-			{
-				RightChild->FirstOrder();
-			}
-		}
-
-		void MidOrder()
-		{
-			if (nullptr != LeftChild)
-			{
-				LeftChild->MidOrder();
-			}
-			std::cout << Pair.first << std::endl;
-			if (nullptr != RightChild)
-			{
-				RightChild->MidOrder();
-			}
-		}
-
-		void LastOrder()
-		{
-			if (nullptr != LeftChild)
-			{
-				LeftChild->LastOrder();
-			}
-			if (nullptr != RightChild)
-			{
-				RightChild->LastOrder();
-			}
-			std::cout << Pair.first << std::endl;
-		}
-
-		~MapNode()
-		{
-			if (nullptr != LeftChild)
-			{
-				delete LeftChild;
-				LeftChild = nullptr;
-			}
-			if (nullptr != RightChild)
-			{
-				delete RightChild;
-				RightChild = nullptr;
-			}
-			std::cout << "지워진 녀석 : " << Pair.first << std::endl;
-		}
 	};
 
 	class iterator
@@ -265,7 +267,7 @@ public:
 
 		}
 
-		GameEnginepair<KeyType, ValueType>* operator->()
+		GameEnginepair* operator->()
 		{
 			return &Node->Pair;
 		}
@@ -339,7 +341,7 @@ public:
 		}
 		// 지워질 노드
 		MapNode* CurNode = _EraseIter.Node;
-		// 지워질 노드의 부모노드 
+		// 지워질 노드의 부모노드
 		MapNode* ParentNode = CurNode->Parent;
 		// 지워질 노드의 다음 노드
 		MapNode* NextNode = CurNode->NextNode();
@@ -350,90 +352,56 @@ public:
 		// 지워질 노드의 왼쪽 자식노드
 		MapNode* LeftChild = CurNode->LeftChild;
 
-		// 만약 지워지는 노드가 잎노드라면
 		if (true == CurNode->IsLeaf())
 		{
-			// 잎노드는 자식이 존재하지 않음
-			ParentNode->ChangeChild(CurNode, nullptr);
-			if (nullptr != CurNode)
-			{
-				delete CurNode;
-				CurNode = nullptr;
-			}
+			CurNode->Release();
+			delete CurNode;
+			CurNode = nullptr;
 			return NextNode;
 		}
 
-		// 만약 자식이 하나라도 있으면
-		MapNode* ChangeChild = nullptr;
-		MapNode* ChangeParent = nullptr;
-
-		// 왼쪽자식이 있다면
-		if (nullptr != LeftChild)
-		{
-			// 왼쪽자식의 MaxNode로 대체
-			// MaxNode이므로 ChangeNode는 오른쪽자식이 없음
-			ChangeNode = LeftChild->MaxNode();
-			ChangeChild = ChangeNode->LeftChild;
-			ChangeParent = ChangeNode->Parent;
-		}
-		else if (nullptr != RightChild)
-		{
-			// 왼쪽자식이 없고 오른쪽 자식이 있다면
-			// 오른쪽자식의 MinNode로 대체
-			// MinNode이므로 ChangeNode는 왼쪽자식이 없음
-			ChangeNode = RightChild->MinNode();
-			ChangeChild = ChangeNode->RightChild;
-			ChangeParent = ChangeNode->Parent;
-		}
-
-		// 오류발생시 체크용
-		if (nullptr == ChangeNode)
-		{
-			MsgBoxAssert("대체할 노드가 없다???");
-			return nullptr;
-		}
-
-		// 현재 대체되어야 해서 빠져나가는 노드인 ChangeNode
-		// ChangeNode가 빠져나가면서 자식을 부모로 끌어올려줌(연결이 이어지게)
-		if (nullptr != ChangeParent)
-		{
-			ChangeParent->ChangeChild(ChangeNode, ChangeChild);
-		}
-
-		// 지워지는 노드 자리에 대체되어야 하는 노드를 삽입
-		if (nullptr != ParentNode)
-		{
-			ParentNode->ChangeChild(CurNode, ChangeNode);
-		}
-		else 
-		{
-			// 만약 erase되는게 Root노드일 경우
-			ChangeNode->Parent = nullptr;
-			Root = ChangeNode;
-		}
-
-		// 대체된 노드의 왼쪽 자식노드 세팅
-		ChangeNode->LeftChild = LeftChild;
-		if (nullptr != LeftChild)
-		{
-			// 왼쪽 자식노드의 부모노드를 대체된 노드로 세팅
-			LeftChild->Parent = ChangeNode;
-		}
-		// 대체된 노드의 오른쪽 자식노드 세팅
-		ChangeNode->RightChild = RightChild;
 		if (nullptr != RightChild)
 		{
-			// 오른쪽 자식노드의 부모노드를 대체된 노드로 세팅
-			RightChild->Parent = ChangeNode;
+			ChangeNode = RightChild->MinNode();
+			ChangeNode->Detach();
+			if (nullptr != ParentNode)
+			{
+				ParentNode->ChangeChild(CurNode, ChangeNode);
+				ChangeNode->LeftChild = CurNode->LeftChild;
+				if (nullptr != ChangeNode->LeftChild)
+				{
+					ChangeNode->LeftChild->Parent = ChangeNode;
+				}
+				ChangeNode->RightChild = CurNode->RightChild;
+				if (nullptr != ChangeNode->RightChild)
+				{
+					ChangeNode->RightChild->Parent = ChangeNode;
+				}
+			}
+			return ChangeNode;
 		}
-
-		// 그리고 지워져야할 노드는 삭제
-		if (nullptr != CurNode)
+		else if (nullptr != LeftChild)
 		{
-			delete CurNode;
-			CurNode = nullptr;
+			ChangeNode = LeftChild->MaxNode();
+			ChangeNode->Detach();
+			if (nullptr != ParentNode)
+			{
+				ParentNode->ChangeChild(CurNode, ChangeNode);
+				ChangeNode->LeftChild = CurNode->LeftChild;
+				if (nullptr != ChangeNode->LeftChild)
+				{
+					ChangeNode->LeftChild->Parent = ChangeNode;
+				}
+				ChangeNode->RightChild = CurNode->RightChild;
+				if (nullptr != ChangeNode->RightChild)
+				{
+					ChangeNode->RightChild->Parent = ChangeNode;
+				}
+			}
+			return ChangeNode;
 		}
 		return NextNode;
+
 	}
 
 	iterator find(const KeyType _Key)
@@ -447,7 +415,7 @@ public:
 	}
 
 	// 안들어가면 false리턴
-	bool insert(const GameEnginepair<KeyType, ValueType>& _Pair)
+	bool insert(const GameEnginepair& _Pair)
 	{
 		if (nullptr == Root)
 		{
@@ -468,29 +436,10 @@ public:
 		return true;
 	}
 
-	void FirstOrder()
-	{
-		Root->FirstOrder();
-	}
 
-	void MidOrder()
-	{
-		Root->MidOrder();
-	}
+	MapNode* Root = nullptr;
 
-	void LastOrder()
-	{
-		Root->LastOrder();
-	}
-
-
-	~GameEngineMap()
-	{
-		delete Root;
-		Root = nullptr;
-	}
 protected:
 
 private:
-	MapNode* Root = nullptr;
 };
