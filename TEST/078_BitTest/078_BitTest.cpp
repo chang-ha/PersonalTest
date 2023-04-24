@@ -26,5 +26,7 @@ int main()
 	// 리틀 엔디안 (little - endian)
 	// 반대는 빅 엔디안 (big - endian) << 최초 예상한 순서
 	int a = 0;
+
+	return 20;
 }
 

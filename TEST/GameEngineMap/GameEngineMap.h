@@ -197,6 +197,7 @@ public:
 
 		void FirstOrder()
 		{
+			// 전위순회 : 어떤 작업을 한 뒤 순회를 돔 (루트부터 작업을 해 나감)
 			std::cout << Pair.first << std::endl;
 			if (nullptr != LeftChild)
 			{
@@ -214,6 +215,7 @@ public:
 			{
 				LeftChild->MidOrder();
 			}
+			// 중위순회 : 순회를 도는 중간에 어떤 작업을 함 (왼쪽or오른쪽 자식을 작업 함 > 루트노드 작업 > 나머지 자식 작업)
 			std::cout << Pair.first << std::endl;
 			if (nullptr != RightChild)
 			{
@@ -231,6 +233,7 @@ public:
 			{
 				RightChild->LastOrder();
 			}
+			// 후위순회 : 순회를 전부 돈 다음 어떤 작업을 함 (리프노드부터 작업 > 부모노드로 올라가면서 마지막엔 루트노드 작업)
 			std::cout << Pair.first << std::endl;
 		}
 

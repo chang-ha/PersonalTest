@@ -56,7 +56,6 @@ void main()
 
 	{
 		int* Newint = new int(10);
-		
 		// 안전한 삭제 (save delete)
 		if (nullptr != Newint)
 		{

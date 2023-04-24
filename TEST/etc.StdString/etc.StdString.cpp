@@ -106,8 +106,8 @@ int main()
 		// 아래 비교문은 내부로 들어갈까?? XXXXX
 		// 아래는 주소값을 비교한 것임 
 		// 절대 값이 같다고 생각하면 안됨
-		// 원래는 Arr0와 Arr1은 char[]형이었는데 비교를 위해 char*로 암시적형변환한것임
-		if (Arr0 == Arr1) // it(reinterpret_cast<char*>(Arr0) == reinterpret_cast<char*>(Arr1))
+		// 원래는 Arr0와 Arr1은 char[]형이었는데 비교를 위해 char*로 암시적형변환한것임 (주소값끼리 비교한 연산)
+		if (Arr0 == Arr1) // if(reinterpret_cast<char*>(Arr0) == reinterpret_cast<char*>(Arr1))
 		{
 			int a = 0;
 		}
