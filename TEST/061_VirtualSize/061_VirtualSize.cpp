@@ -2,7 +2,7 @@
 
 
 #include <iostream>
-// 다형성을 표현하는 문법인 virtual은 보통 상속과 함께합니다.
+// 다형성을 표현하는 문법인 "virtual은 보통 상속과 함께"합니다.
 // 다형성 == 상속??? XXXXXXXXXXXXXXXXXXXXXXXXXXX (쳐맞습니다)
 class FightUnit
 {

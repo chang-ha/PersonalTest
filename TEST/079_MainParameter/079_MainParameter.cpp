@@ -7,7 +7,8 @@ int main(int _Count, const char** _InitText)
 {
 	// 내 프로세스가 다른 프로세스를 실행할수도 있습니다.
 	// 내가 실행하는 곳에 따라서 위치가 달라진다
-
+	// system("cls"); // << 사실 system의 정체는 외부 프로그램을 사용하는 것이었음
+	// system("파일경로");
 	for (size_t i = 0; i < _Count; i++)
 	{
 		// char*자료형임

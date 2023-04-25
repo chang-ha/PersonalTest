@@ -32,7 +32,7 @@ public:
     Monster()
     {
         // 4를 원하지만 1이 나옴
-        // 저 값들은 객체마다 각자 가지고 있기 때문에
+        // 저 값(privateCount)들은 객체마다 각자 가지고 있기 때문에 (a객체의 privateCount, b객체의 preivateCount... = 모두 1)
         // 전역변수로하면 4가 나옴 << 그치만 객체가 깨져버림
         // 그래서 class의 전역변수를 문법생성
         // 그게 "static 멤버변수"
@@ -40,6 +40,7 @@ public:
         ++privateCount;
     }
 
+    // 함수의 선언
     // 이렇게 하면 "확인할 수 없는 외부 기호" 에러가 남
     // 선언만해놓고 실체가 없음(구현을 안했음) << 어떤식으로든 안한것임
     void Print();
@@ -66,7 +67,7 @@ private:
     static int privateCount;
 };
 
-// 전역에서 초기화해줘야함
+// 전역에서 초기화해줘야함(클래스 외부에서 실제 메모리를 할당받는 것)
 // 실체를 둔다는 것
 int Monster::privateCount = 0;
 
