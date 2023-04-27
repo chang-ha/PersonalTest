@@ -39,6 +39,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, // 윈도우가 응용프로그�
         return FALSE;
     }
 
+    // 단축키 저장 테이블
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWTESTPROJECT));
 
     MSG msg;
@@ -49,6 +50,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, // 윈도우가 응용프로그�
     // GetMessagen << 윈도우에 무슨일이 생겼는지 체크
     while (GetMessage(&msg, nullptr, 0, 0))
     {
+        // 단축키를 눌렀다면 if문 안에를 실행
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         {
             TranslateMessage(&msg);
@@ -65,6 +67,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, // 윈도우가 응용프로그�
 // 이 윈도우 창은 크기를 조절할 수 있고 아이콘은 뭐고 등등...
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
+    // 윈도우창의 아래 정보들을 담고있는 구조체
     WNDCLASSEXW wcex;
 
     // 크기(구조체)
@@ -75,7 +78,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     // 중요!!!
     // 윈도우에 무슨일이 생기면 어떻게 처리할까??
-    // 이때 사용하는게 "함수포인터" (UI에서 사용한다고 했음) << 내가 어떻게 해야할지 알려줘
+    // 이때 사용하는게 "함수포인터" (UI에서 사용한다고 했음) << 메세지가 들어왔을 떄 내가 어떻게 해야할지 알려줘
     // 내가 너 대신 행동(함수)를 해줄게
     wcex.lpfnWndProc    = WndProc;
 
@@ -103,6 +106,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     //wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WINDOWTESTPROJECT);
     wcex.lpszMenuName   = nullptr; // 메뉴창을 사용하지 않는다고 등록
     
+    // 중요!!!
     // 이 형식의 이름은 "AAAAAA" 입니다.
     // 앞으로 제가 윈도우를 만들 때 선택할 수 있는 형식 중 1가지로 "AAAAAA"를 등록해 주세요
     wcex.lpszClassName  = szWindowClass;
@@ -111,7 +115,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     // 위에서 설정한 윈도우의 형식을
-    // 윈도우 형식을 등록하는 함수
+    // 윈도우 형식을 등록하는 함수 << 내 의견 : 나중에 위의 내용을 저장한 형식의 윈도우 창을 띄울때 해당 형식을 사용하는듯??? 
     return RegisterClassExW(&wcex);
 }
 
@@ -121,7 +125,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    // 윈도우를 만드는 함수
    // 윈도우 != 프로그램 (프로그램 하나가 윈도우 여러 개를 띄울 수 있음) << 윈도우는 그저 내 프로그램에 귀속된 인터페이스일 뿐임 (윈도우가 프로그램이 아님)
-   // HWND 등 DECLARE_HANDLE == struct HWND__{int unused;}; typedef struct HWND__ *HWND << 구조체의 포인터임
+   // HWND 등 DECLARE_HANDLE == struct HWND__{int unused;}; typedef struct HWND__ *HWND << 구조체의 포인터임 (멤버변수는 int 하나 << 내 의견 :  윈도우가 주는 ID값(권한) 인듯???)
    // 왜 이렇게 핸들 종류가 많을까??
    // 1. 하나의 핸들로 윈도우의 수많은 기능을 관리할수가 없음 << 그래서 해당 기능에 관련된 관리번호를 따로 부여해 주는 것 
    // 2. 만약 윈도우가 여러 개 존재한다면 어떻게 구분하여 함수를 처리할 것인가?? << 윈도우창 마다 관리번호를 따로 부여해줌으로 해결
@@ -206,8 +210,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     default:
         // 내가 처리한 메세지 종류가 아닐 경우에는
-        // 윈도우 자체적으로 처리해준다(Default로 처리해준다)
-        // WM 종류가 엄청나게 많기 때문에 모든 case를 사용자가 처리할 수 없기 떄문
+        // 윈도우 자체적으로 처리해준다(DefWindowProc으로 처리해줌)
+        // WM(Window Message) 종류가 엄청나게 많기 때문에 모든 메세지를 case로 사용자가 처리할 수 없기 떄문(내 의견 : default라고 보면 되는 듯)
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
