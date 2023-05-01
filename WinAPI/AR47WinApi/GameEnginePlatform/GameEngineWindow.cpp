@@ -83,6 +83,12 @@ void GameEngineWindow::InitInstance()
         MsgBoxAssert("윈도우 생성에 실패했습니다.");
         return;
     }
+    // CreateDC 할필요 없음 << CreateDC는 완전히 새로운 HDC를 만드는함수임
+    // hWnd = CreateWindowA할 때, HDC값도 안에 만들어져있음
+    // 해당값을 받아오기만 하면 됨 (GetDC)
+
+    // 윈도우창에 그림을 그리기위한 핸들을 저장
+    Hdc = GetDC(hWnd); // == ::GetDC(hWnd);
     // 윈도우창을 시각적으로 보여주는 함수
     ShowWindow(hWnd, SW_SHOW);
     // 윈도우창을 다시 그려주는 함수(업데이트)
@@ -121,6 +127,10 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
 }
 
 // 윈도우창에 들어온 메세지를 어떻게 처리할 지 정하는 함수
+// lpfnWndProc = GameEngineWindow::WndProc을 받는데
+// lpfnWndProc를 타고 가보면 함수포인터를 받을 때 앞에 CALLBACK이라고 붙어있음
+// CALLBACK = __stdcall (함수호출규약)으로 되어있는데
+// 해당 함수를 받는 쪽이 __stdcall을 원하니 함수 선언 및 구현시 맞춰줘야함
 LRESULT CALLBACK GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)

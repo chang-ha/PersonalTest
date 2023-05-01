@@ -20,6 +20,10 @@ public:
 
 	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
 
+	HDC GetHDC()
+	{
+		return Hdc;
+	}
 protected:
 
 private:
@@ -29,6 +33,8 @@ private:
 	std::string Title = "";
 	// 윈도우 핸들을 받기위한 멤버변수
 	HWND hWnd = nullptr;
+	// 윈도우창에 그림을 그리기위한 윈도우 핸들
+	HDC Hdc = nullptr;
 
 	void MyRegisterClass();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

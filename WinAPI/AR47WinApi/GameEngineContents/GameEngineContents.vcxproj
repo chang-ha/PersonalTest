@@ -151,6 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ContentCore.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EndingLevel.h">
       <SubType>
       </SubType>
@@ -169,6 +173,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ContentCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EndingLevel.cpp">
       <SubType>
       </SubType>

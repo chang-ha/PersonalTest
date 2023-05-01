@@ -1,7 +1,7 @@
 #pragma once
 
 // 설명 : 모든 기본적인 행동을 제안하는 클래스
-// 제안하는 클래스
+// 제안하는 클래스 (제안 : virtual을 만들건데, 자식이 따로 구현을 할 것인지는 선택임)
 class GameEngineObject
 {
 public:
@@ -53,8 +53,8 @@ protected:
 
 private:
 	// 객체가 업데이트가 되어야 하는지 판별하는 값
-	bool IsUpdateValue = true;
+	bool IsUpdateValue = true;	// 기능을 끄고 싶으면 false
 	// 객체를 삭제해야 하는지 판별하는 값
-	bool IsDeathValue = false;
+	bool IsDeathValue = false;	// 메모리에서 날려버리고 싶으면 true
 };
 

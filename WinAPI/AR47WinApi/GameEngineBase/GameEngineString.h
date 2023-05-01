@@ -15,7 +15,8 @@ public:
 	GameEngineString& operator=(const GameEngineString& _Other) = delete;
 	GameEngineString& operator=(GameEngineString&& _Other) noexcept = delete;
 
-	static std::string ToUpperReturn(const std::string& _Value) 
+	// 앞으로 들어오는 모든 인자열 인자는 대문자로 바꿔서 관리할 것임
+	static std::string ToUpperReturn(const std::string& _Value)
 	{
 		std::string UpperString = _Value;
 
