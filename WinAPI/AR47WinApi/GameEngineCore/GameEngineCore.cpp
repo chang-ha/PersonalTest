@@ -43,10 +43,14 @@ void GameEngineCore::CoreStart(HINSTANCE _Inst)
 	Process->Start();
 }
 
+// MessageLoop함수에서 호출됨
+// 윈도우창에 메세지가 들어오면 호출되는 부분임
 void GameEngineCore::CoreUpdate()
 {
-	// MessageLoop함수에서 호출됨
-	// 윈도우창에 메세지가 들어오면 호출되는 부분임
+	// 한프레임동안은 CurLevel을 바뀌지 않게 하기 위해
+	// Update가 다시 호출될 때 NextLevel을 CurLevel로 바뀌게 설계함
+	// 만약 이렇게 구조를 짜지 않으면
+	// CurLevel->Update()도중에 다른 Level로 바뀔 수 가 있음 (한프레임동안 Level이 막 바뀌고 그럼)
 	if (nullptr != NextLevel)
 	{
 		// NextLevel이 존재하면

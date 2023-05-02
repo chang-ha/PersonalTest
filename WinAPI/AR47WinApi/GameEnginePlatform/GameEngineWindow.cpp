@@ -5,6 +5,9 @@
 HINSTANCE GameEngineWindow::Instance = nullptr;
 // 윈도우창은 한개만 만들기 위해 싱글톤 패턴 사용
 GameEngineWindow GameEngineWindow::MainWindow;
+// IsWindowUpdate의 실체를 구현(최초는 true값으로)
+bool GameEngineWindow::IsWindowUpdate = true;
+
 
 GameEngineWindow::GameEngineWindow()
 {
@@ -78,6 +81,7 @@ void GameEngineWindow::InitInstance()
     // Instance : 해당 프로그램의 hInstance
     hWnd = CreateWindowA("DefaultWindow", Title.c_str(), WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, Instance, nullptr);
+
     if (nullptr == hWnd)
     {
         MsgBoxAssert("윈도우 생성에 실패했습니다.");
@@ -107,16 +111,42 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
     }
 
     MSG msg;
-    while (GetMessage(&msg, nullptr, 0, 0))
+
+    while (IsWindowUpdate)
     {
-        // 윈도우창이 떠있는 동안 계속 업데이트 해주는 부분
+        // 프레임 : while로 묶여있는 내가 원하는 일을 한번 처리하는 단위 (내부에 움직이고 그린다는 작업이 들어가 있음)
+        
+        // 윈도우에 무슨일이 있는게 아니라 메세지가 있든 없든 
+        // GetMessage << 동기함수 (함수내부에 모든일을 끝내야면 return을 해줌, 함수가 제대로 끝날때까지 기다리는 함수), ex) _getch()
+        // 그래서 GetMessage에서 PeekMessage로 바꿔줌 (다른점은 마지막 인자 하나 추가 : PM_REMOVE, PM_NOREMOVE, PM_NOYIELD)
+        // PeekMessage는 윈도우에 메세지가 없으면 0이 리턴됨
+        // PeekMessage로 바꾸면서 프레임과 데드타임이 생겼다.
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        {
+            // 윈도우창이 떠있는 동안 계속 업데이트 해주는 부분
+
+            // while문 한바퀴 도는것이 1프레임(FPS << 초당 화면이 그려지는 횟수)
+            // 모니터 주사율 (모니터가 띄울수 있는 최대 프레임)
+            // 윈도우창을 조작할 때도 게임이 움직이게 하기 위해서는 Message처리하는 부분에서도 Update를 해주면 된다.
+            if (nullptr != _Update)
+            {
+                _Update();
+            }
+
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+            continue;
+        }
+
+        // 윈도우 메세지가 없는 시간을 데드타임이라고 합니다.
+        // 게임은 데드타임에 돌아가는게 보통이다.
+        // 게임중에 2가지 종류가 있다. 
+        // 1) 윈도우를 움직이거나 크기를 줄이면 화면이 정지하는 게임
+        // 2) 내가 그런 윈도우 메세지를 발생시키는 와중에도 움직이는 게임
         if (nullptr != _Update)
         {
             _Update();
         }
-
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
     }
 
     if (nullptr != _End)
@@ -143,7 +173,9 @@ LRESULT CALLBACK GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wPara
     }
     break;
     case WM_DESTROY:
-        PostQuitMessage(0);
+        // WindowLoopOff();
+        IsWindowUpdate = false;
+        // PostQuitMessage(0);
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);

@@ -20,9 +20,16 @@ public:
 
 	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
 
+	// 윈도우창에 그림을 그리기위한 핸들을 리턴해주는 함수
 	HDC GetHDC()
 	{
 		return Hdc;
+	}
+
+	// 윈도우창 업데이트를 off하는 기능
+	static void WindowLoopOff()
+	{
+		IsWindowUpdate = false;
 	}
 protected:
 
@@ -35,9 +42,11 @@ private:
 	HWND hWnd = nullptr;
 	// 윈도우창에 그림을 그리기위한 윈도우 핸들
 	HDC Hdc = nullptr;
+	// 윈도우창을 업데이트 해야하는지 체크하는 bool값
+	static bool IsWindowUpdate;
 
-	void MyRegisterClass();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	void MyRegisterClass();
 	void InitInstance();
 
 };
