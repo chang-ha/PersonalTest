@@ -51,7 +51,7 @@ void GameEngineLevel::ActorInit(GameEngineActor* _Actor)
 }
 
 // Level에 속하는 Actor들을 Update & Render해주는 역할은 해당 Level이 해야함
-void GameEngineLevel::ActorUpdate()
+void GameEngineLevel::ActorUpdate(float _Delta)
 {
 	//std::map<int, std::list<GameEngineActor*>>::iterator Start = AllActors.begin();
 	//std::map<int, std::list<GameEngineActor*>>::iterator End = AllActors.end();
@@ -65,7 +65,7 @@ void GameEngineLevel::ActorUpdate()
 		const std::list<GameEngineActor*>& Group = _Pair.second;
 		for (GameEngineActor* _Actor : Group)
 		{
-			_Actor->Update();
+			_Actor->Update(_Delta);
 		}
 	}
 }

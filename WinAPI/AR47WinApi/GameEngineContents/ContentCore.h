@@ -20,7 +20,7 @@ private:
 	// GameEngineObject에서 상속받은 함수들
 	void Start() override;
 
-	void Update() override;
+	void Update(float _Delta) override;
 
 	void Render() override;
 

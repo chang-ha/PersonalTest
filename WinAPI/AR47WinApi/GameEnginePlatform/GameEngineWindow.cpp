@@ -1,11 +1,11 @@
 ﻿#include "GameEngineWindow.h"
 #include <GameEngineBase/GameEngineDebug.h>
 
-// 해당 프로그램의 hInstance값을 받기위한 static 변수
+// static변수인 Instance의 실체를 구현
 HINSTANCE GameEngineWindow::Instance = nullptr;
-// 윈도우창은 한개만 만들기 위해 싱글톤 패턴 사용
+// static변수인 MainWindow의 실체를 구현
 GameEngineWindow GameEngineWindow::MainWindow;
-// IsWindowUpdate의 실체를 구현(최초는 true값으로)
+// static변수인 IsWindowUpdate의 실체를 구현(최초는 true값으로)
 bool GameEngineWindow::IsWindowUpdate = true;
 
 
@@ -48,7 +48,9 @@ void GameEngineWindow::MyRegisterClass()
     {
         return;
     }
-
+    // WNDCLASSEXW wcex; << 문자열을 wide byte로 처리 (맨 뒤의 W)
+    // WNDCLASSEXA wcex; << 문자열을 multi byte로 처리 (맨 뒤의 A)
+    
     WNDCLASSEXA wcex;
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -57,14 +59,14 @@ void GameEngineWindow::MyRegisterClass()
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
     wcex.hInstance = Instance; // hInstance값
-    wcex.hIcon = nullptr;
+    wcex.hIcon = nullptr; // LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINDOWTESTPROJECT));
     wcex.hCursor = LoadCursor(nullptr, IDC_CROSS);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 2);
     wcex.lpszMenuName = nullptr;
     wcex.lpszClassName = "DefaultWindow"; // 윈도우형식 이름
-    wcex.hIconSm = nullptr;
+    wcex.hIconSm = nullptr; // LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
-    // RegisterClassExA는 ATOM(unsigned short)를 반환하는데 클래스 등록에 실패하면 0을 리턴
+    // RegisterClassExA의 return은 ATOM == unsigned short & 함수가 실패하면 return값은 0
     if (false == RegisterClassExA(&wcex))
     {
         MsgBoxAssert("윈도우 클래스 동록에 실패했습니다.");
@@ -153,6 +155,8 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
     {
         _End();
     }
+
+    //(int)msg.wParam;
     return;
 }
 

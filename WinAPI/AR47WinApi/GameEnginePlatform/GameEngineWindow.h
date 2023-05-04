@@ -5,7 +5,9 @@
 class GameEngineWindow
 {
 public:
+	// 클래스 내부에 static변수로 선언(싱글톤 X)
 	static GameEngineWindow MainWindow;
+
 	// constructer destructer
 	GameEngineWindow();
 	~GameEngineWindow();

@@ -1,5 +1,7 @@
 ﻿#include "GameEngineCore.h"
 #include "GameEngineLevel.h"
+#include <GameEngineBase/GameEngineTime.h>
+
 // WindowTitle의 실체를 만듦
 std::string GameEngineCore::WindowTitle = "";
 // AllLevel의 실체를 만듦
@@ -57,11 +59,14 @@ void GameEngineCore::CoreUpdate()
 		// CurLevel을 NextLevel로 바꿔줌
 		CurLevel = NextLevel;
 		NextLevel = nullptr;
+		GameEngineTime::MainTimer.Reset();
 	}
 
+	GameEngineTime::MainTimer.Update();
+	float Delta = GameEngineTime::MainTimer.GetDeltaTime();
 	// CurLevel부분을 Update 및 Render
-	CurLevel->Update();
-	CurLevel->ActorUpdate();
+	CurLevel->Update(Delta);
+	CurLevel->ActorUpdate(Delta);
 	CurLevel->Render();
 	CurLevel->ActorRender();
 }
@@ -81,7 +86,7 @@ void GameEngineCore::CoreEnd()
 	}
 
 	// Ranged for 돌면서 Level을 모두 삭제
-	for (std::pair<std::string, GameEngineLevel*> _Pair : AllLevel)
+	for (std::pair<const std::string, GameEngineLevel*>& _Pair : AllLevel)
 	{
 		if (nullptr != _Pair.second)
 		{

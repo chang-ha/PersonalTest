@@ -5,13 +5,14 @@
 #include <GameEngineBase/GameEngineString.h>
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineObject.h"
+
 // 윈도우를 직접 조종하는 라이브러리
 // 사용자가 직접 hInstance를 받아서 어쩌구... 할 필요가 없음
 // 엔진을 쓸 떄 윈도우를 사용자가 직접 조작해야 하는 경우는 없음
 
 // 엔진 입장에서는 유저가 무슨 게임을 만들지를 알 수가 없음(그렇다고 컨텐츠부분을 알면 안됨)
 // 함수포인터(Virtual함수)로 해결이 가능
-// Content 부분을 만들 떄 CoreProcess를 상속받아서 만들어
+// Content부분을 만들 떄 CoreProcess를 상속받아서 만들어
 // Content부분에서 만든 함수를 엔진부분(Core)에서 대신 호출해줄게
 class CoreProcess : public GameEngineObject
 {
@@ -25,10 +26,6 @@ class GameEngineLevel;
 class GameEngineCore
 {
 public:
-	// constructer destructer
-	GameEngineCore();
-	~GameEngineCore();
-
 	// delete function
 	GameEngineCore(const GameEngineCore& _Ohter) = delete;
 	GameEngineCore(GameEngineCore&& _Ohter) noexcept = delete;
@@ -100,5 +97,9 @@ private:
 	static std::map<std::string, GameEngineLevel*> AllLevel;
 	static GameEngineLevel* CurLevel;
 	static GameEngineLevel* NextLevel;
+
+	// constructer destructer
+	GameEngineCore();
+	~GameEngineCore();
 };
 

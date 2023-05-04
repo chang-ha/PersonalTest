@@ -1,5 +1,9 @@
 ﻿#include <iostream>
 
+// 2023-05-03 추가내용
+// 컴퓨터에서는 0나누기는 절대 하면안됨 (최악)
+// 제로디비전이라고 부름
+
 int Plus(int _left, int _right)
 {
     return _left + _right;
