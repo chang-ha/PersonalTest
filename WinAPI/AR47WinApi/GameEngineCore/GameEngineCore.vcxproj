@@ -71,23 +71,23 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Bin\$(Platform)</OutDir>
-    <IntDir>$(SolutionDir)Bin\$(Platform)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)Bin\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Bin\$(Platform)\$(ProjectName)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\;</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Bin\$(Platform)</OutDir>
-    <IntDir>$(SolutionDir)Bin\$(Platform)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)Bin\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Bin\$(Platform)\$(ProjectName)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\;</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Bin\$(Platform)</OutDir>
-    <IntDir>$(SolutionDir)Bin\$(Platform)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)Bin\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Bin\$(Platform)\$(ProjectName)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\;</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Bin\$(Platform)</OutDir>
-    <IntDir>$(SolutionDir)Bin\$(Platform)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)Bin\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Bin\$(Platform)\$(ProjectName)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\;</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -159,6 +159,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineCamera.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineCore.h">
       <SubType>
       </SubType>
@@ -171,7 +175,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineTexture.h">
+    <ClInclude Include="GameEngineRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -182,6 +186,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineCamera.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -197,7 +205,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameEngineTexture.cpp">
+    <ClCompile Include="GameEngineRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -4,7 +4,6 @@
 class GameEngineTime
 {
 public:
-	// ΩÃ±€≈Ê ∆–≈œ
 	static GameEngineTime MainTimer;
 
 	// constructer destructer

@@ -1,5 +1,6 @@
 ﻿#include "PlayLevel.h"
 #include "Player.h"
+#include "BackGround.h"
 
 
 PlayLevel::PlayLevel()
@@ -23,7 +24,9 @@ void PlayLevel::Start()
 	// 아래처럼 만들지 않음 << 이렇게 만들면 내가 Player객체를 관리할수가없음
 	// 여기서만 사용가능한 NewPlayer(자기 임의대로 만들겠다는 뜻임)
 	// Player* NewPlayer = new Player();
-	CreateActor<Player>();
+	BackGround* Back = CreateActor<BackGround>();
+	Back->Init("Title.bmp");
+	Player* Farmer = CreateActor<Player>();
 }
 
 void PlayLevel::Update(float _Delta)

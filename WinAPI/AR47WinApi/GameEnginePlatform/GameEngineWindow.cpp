@@ -11,12 +11,21 @@ bool GameEngineWindow::IsWindowUpdate = true;
 
 GameEngineWindow::GameEngineWindow()
 {
-
 }
 
 GameEngineWindow::~GameEngineWindow()
 {
+    if (nullptr != BackBuffer)
+    {
+        delete BackBuffer;
+        BackBuffer = nullptr;
+    }
 
+    if (nullptr != WindowBuffer)
+    {
+        delete WindowBuffer;
+        WindowBuffer = nullptr;
+    }
 }
 
 // 윈도우창을 만들기 위한 전체적인 함수
@@ -95,6 +104,15 @@ void GameEngineWindow::InitInstance()
 
     // 윈도우창에 그림을 그리기위한 핸들을 저장
     Hdc = GetDC(hWnd); // == ::GetDC(hWnd);
+
+    WindowBuffer = new GameEngineWindowTexture();
+    WindowBuffer->ResCreate(Hdc);
+
+    // 더블버퍼링 구조를 짜기 위해 Buffer를 2개 만들어서 BackBuffer에 모든 것을 그린 뒤
+    // BackBuffer의 내용을 WindowBuffer에 그려서 시각적으로 보이게 만듦
+    BackBuffer = new GameEngineWindowTexture();
+    BackBuffer->ResCreate(WindowBuffer->GetScale());
+
     // 윈도우창을 시각적으로 보여주는 함수
     ShowWindow(hWnd, SW_SHOW);
     // 윈도우창을 다시 그려주는 함수(업데이트)
@@ -177,7 +195,7 @@ LRESULT CALLBACK GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wPara
     }
     break;
     case WM_DESTROY:
-        // WindowLoopOff();
+        // WindowLoopOff(); 
         IsWindowUpdate = false;
         // PostQuitMessage(0);
         break;
@@ -187,3 +205,38 @@ LRESULT CALLBACK GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wPara
     return 0;
 }
 
+// 윈도우창의 크기를 조절하기 위한 함수
+void GameEngineWindow::SetPosAndScale(const float4& _Pos, const float4& _Scale)
+{
+    // Window에서 앞에 LP가 붙어있으면 Long Pointer라는 뜻임
+
+    // 외부에서 받은 Scale값을 저장
+    // 윈도우창의 크기를 바꾸기 위한 값(크기)
+    Scale = _Scale;
+
+    if (nullptr != BackBuffer)
+    {
+        // 윈도우의 크기가 바뀌면 BackBuffer를 새로 만듦 (이전 BackBuffer가 의미가 없기 떄문)
+        delete BackBuffer;
+        BackBuffer = new GameEngineWindowTexture();
+        BackBuffer->ResCreate(Scale);
+    }
+    // X, Y좌표는 0, 0기준으로 내가 원하는 Scale값을 일단 넣어줌
+    RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
+
+    // 우리가 원하는 윈도우창의 크기는 윈도우창에서 위에 윈도우바가 없는 크기를 세팅해주고 싶음
+    // 그래서 우리가 원하는 크기 + 윈도우바 + 윈도우창의 테두리를 더해주면 해당 윈도우창의 크기가 나옴
+    // 그래서 쓰는 함수가 AdjustWindowRect
+    // 해당 함수를 쓰면 위에서 원하는 것들을 자동으로 계산해서 조정해줌
+    AdjustWindowRect(&Rc, // 내가 조정하고 싶은 Rc를 넣어줌
+        WS_OVERLAPPEDWINDOW, // Window창을 만들 떄 당시 넣어줬던 옵션
+        FALSE); // FALSE로 해도됨
+
+    // 원하는 윈도우창의 크기를 조절하는 함수
+    SetWindowPos(hWnd, nullptr, 100 + Rc.left, 100, Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
+}
+
+void GameEngineWindow::DoubleBuffering()
+{
+    WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());
+}

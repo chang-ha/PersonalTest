@@ -1,6 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <string>
+#include "GameEngineWindowTexture.h"
+#include <GameEngineBase/GameEngineMath.h>
 
 class GameEngineWindow
 {
@@ -33,6 +35,25 @@ public:
 	{
 		IsWindowUpdate = false;
 	}
+
+	float4 GetScale()
+	{
+		return Scale;
+	}
+
+	GameEngineWindowTexture* GetWindowBuffer()
+	{
+		return WindowBuffer;
+	}
+
+	GameEngineWindowTexture* GetBackBuffer()
+	{
+		return BackBuffer;
+	}
+
+	void SetPosAndScale(const float4& _Pos, const float4& _Scale);
+
+	void DoubleBuffering();
 protected:
 
 private:
@@ -42,11 +63,21 @@ private:
 	std::string Title = "";
 	// 윈도우 핸들을 받기위한 멤버변수
 	HWND hWnd = nullptr;
-	// 윈도우창에 그림을 그리기위한 윈도우 핸들
+	// 2차원 배열 형식의 색깔들의 집합이 존재하고
+	// 거기에 그림을 그리거나 수정할수 있는 권한을 HDC
+	// 요약 : 윈도우창에 그림을 그리기위한 윈도우 핸들
 	HDC Hdc = nullptr;
 	// 윈도우창을 업데이트 해야하는지 체크하는 bool값
 	static bool IsWindowUpdate;
+	// 윈도우창에 뜨는 것도 GameEngineTexture로 다루기 위한 멤버변수
+	// 내 의견 : WindowBuffer를 캔버스로 생각하고, 나머지 DC들은 캔버스에 그려야하는 대상이라고 생각
+	GameEngineWindowTexture* WindowBuffer = nullptr;
 
+	// 한 윈도우 창에 그림이 여러개 그려지게 되면 서로 영역다툼을 하면서 깜빡이게 그려짐
+	// 그래서 미리 BackBuffer에 다 그려놓고 BackBuffer를 WindowBuffer에 옮겨오는 형식으로 구성
+	GameEngineWindowTexture* BackBuffer = nullptr;
+	
+	float4 Scale;
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void MyRegisterClass();
 	void InitInstance();

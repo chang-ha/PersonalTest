@@ -7,10 +7,12 @@
 
 // 설명 : 화면 혹은 장면을 표현합니다.
 // 타이틀 장면, 플레이 장면, 엔딩 장면
+class GameEngineCamera;
 class GameEngineCore;
 class GameEngineLevel : public GameEngineObject
 {
 	friend GameEngineCore;
+	friend GameEngineActor;
 public:
 	// constructer destructer
 	GameEngineLevel();
@@ -23,7 +25,7 @@ public:
 	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
 	template<typename ActorType>
-	void CreateActor(int _Order = 0)
+	ActorType* CreateActor(int _Order = 0)
 	{
 		// 자료구조를 하다보면 아래와 같은 상황이 있을때가 있음 
 		// 내가 어떤 자료를 찾아봤는데 없다 -> 그럼 그걸 만들어서 자료구조에 넣어야함
@@ -49,13 +51,16 @@ public:
 		// GameEngineActor로 ActorType을 upcasting해서 힙 메모리에 동적할당
 		GameEngineActor* NewActor = new ActorType();
 
-		// 
 		ActorInit(NewActor);
 		GroupList.push_back(NewActor);
+		return dynamic_cast<ActorType*>(NewActor);
 	}
 protected:
 
 private:
+	GameEngineCamera* MainCamera;
+	GameEngineCamera* UICamera;
+
 	// 맵, 플레이어, 몬스터 엑터가 필요하다고(만들어야한다고) 가정
 	
 	// list로 데이터를 만들 시 만드는 순서가 중요함!!

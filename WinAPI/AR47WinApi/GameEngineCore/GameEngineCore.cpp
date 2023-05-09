@@ -20,7 +20,6 @@ GameEngineCore::GameEngineCore()
 
 GameEngineCore::~GameEngineCore()
 {
-
 }
 
 void GameEngineCore::EngineStart(const std::string& _Title, HINSTANCE _Inst, CoreProcess* _Ptr)
@@ -69,6 +68,8 @@ void GameEngineCore::CoreUpdate()
 	CurLevel->ActorUpdate(Delta);
 	CurLevel->Render();
 	CurLevel->ActorRender();
+
+	GameEngineWindow::MainWindow.DoubleBuffering();
 }
 
 void GameEngineCore::CoreEnd()

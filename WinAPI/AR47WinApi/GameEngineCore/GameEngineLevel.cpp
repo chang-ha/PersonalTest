@@ -1,13 +1,25 @@
 ﻿#include "GameEngineLevel.h"
-
+#include "GameEngineCamera.h"
 
 GameEngineLevel::GameEngineLevel()
 {
-
+	MainCamera = new GameEngineCamera();
+	UICamera = new GameEngineCamera();
 }
 
 GameEngineLevel::~GameEngineLevel()
 {
+	if (nullptr != MainCamera)
+	{
+		delete MainCamera;
+		MainCamera = nullptr;
+	}
+
+	if (nullptr != UICamera)
+	{
+		delete UICamera;
+		UICamera = nullptr;
+	}
 	//std::map<const int, std::list<GameEngineActor*>>::iterator Start = AllActors.begin();
 	//std::map<const int, std::list<GameEngineActor*>>::iterator End = AllActors.end();
 	//for (; Start != End; ++Start)
@@ -44,6 +56,9 @@ GameEngineLevel::~GameEngineLevel()
 
 void GameEngineLevel::ActorInit(GameEngineActor* _Actor)
 {
+	// 나를 만들어준 Level을 Actor는 알아야함
+	_Actor->Level = this;
+
 	// Actor(존재)가 만들어지면 준비가 필요함
 	// Start()함수를 실행하여 준비를 하는 단계임
 	// 만약 업데이트에서 준비를 하게되면 계속 새로 초기화하고.... << 로딩이 오래걸림

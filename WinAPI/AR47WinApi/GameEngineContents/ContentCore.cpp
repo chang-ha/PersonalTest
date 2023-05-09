@@ -15,6 +15,9 @@ ContentCore::~ContentCore()
 
 void ContentCore::Start()
 {
+	// 700, 800 or 1360x768
+	GameEngineWindow::MainWindow.SetPosAndScale({ 0, 0 }, { 1360, 768 });
+
 	// GameEngineCore의 EngineStart가 실행되는 순간
 	// 윈도우창이 만들어지고 Process(ContentCore)의 Start()가 호출되면서
 	// TitleLevel, PlayLevel, EndingLevel을 만듦
