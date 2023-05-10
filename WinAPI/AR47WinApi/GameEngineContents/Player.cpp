@@ -38,14 +38,11 @@ void Player::Start()
 
 	{
 		GameEngineRenderer* Ptr = CreateRenderer("Player.Bmp", RenderOrder::Play);
-		Ptr->SetRenderScale({ 200, 200 });
 		Ptr->SetTexture("Player.Bmp");
 	}
 
 	{
 		GameEngineRenderer* Ptr = CreateRenderer("Player_arm.Bmp", RenderOrder::Play);
-		Ptr->SetRenderPos({ 0, -100 });
-		Ptr->SetRenderScale({ 200, 40 });
 		Ptr->SetTexture("Player_arm.Bmp");
 	}
 

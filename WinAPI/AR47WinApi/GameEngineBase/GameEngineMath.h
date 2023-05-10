@@ -61,8 +61,8 @@ public:
 	{
 		float4 ReturnValue;
 		ReturnValue.X = X + _Other.X;
-		ReturnValue.X = Y + _Other.Y;
-		ReturnValue.X = Z + _Other.Z;
+		ReturnValue.Y = Y + _Other.Y;
+		ReturnValue.Z = Z + _Other.Z;
 		return ReturnValue;
 	}
 
@@ -70,8 +70,8 @@ public:
 	{
 		float4 ReturnValue;
 		ReturnValue.X = X - _Other.X;
-		ReturnValue.X = Y - _Other.Y;
-		ReturnValue.X = Z - _Other.Z;
+		ReturnValue.Y = Y - _Other.Y;
+		ReturnValue.Z = Z - _Other.Z;
 		return ReturnValue;
 	}
 
@@ -79,8 +79,8 @@ public:
 	{
 		float4 ReturnValue;
 		ReturnValue.X = X * _Other.X;
-		ReturnValue.X = Y * _Other.Y;
-		ReturnValue.X = Z * _Other.Z;
+		ReturnValue.Y = Y * _Other.Y;
+		ReturnValue.Z = Z * _Other.Z;
 		return ReturnValue;
 	}
 
@@ -88,8 +88,8 @@ public:
 	{
 		float4 ReturnValue;
 		ReturnValue.X = X * _Value;
-		ReturnValue.X = Y * _Value;
-		ReturnValue.X = Z * _Value;
+		ReturnValue.Y = Y * _Value;
+		ReturnValue.Z = Z * _Value;
 		return ReturnValue;
 	}
 
