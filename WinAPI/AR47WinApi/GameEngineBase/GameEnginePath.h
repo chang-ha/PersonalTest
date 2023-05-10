@@ -30,6 +30,8 @@ public:
 	// 하위 경로에 있는 원하는 폴더 또는 파일로 경로를 변경해주는 멤버함수
 	void MoveChild(const std::string& _ChildPath);
 
+	std::string PlusFilePath(const std::string& _ChildPath);
+
 	// path 클래스 내부에 있는 경로값을 string으로 return해주는 멤버함수
 	std::string GetStringPath()
 	{

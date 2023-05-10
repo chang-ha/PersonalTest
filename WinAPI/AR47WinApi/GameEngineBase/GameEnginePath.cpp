@@ -72,8 +72,22 @@ void GameEnginePath::MoveChild(const std::string& _ChildPath)
 	Path = CheckPath;
 }
 
+std::string GameEnginePath::PlusFilePath(const std::string& _ChildPath)
+{
+	std::filesystem::path CheckPath = Path;
+	
+	CheckPath.append(_ChildPath);
+
+	if (false == std::filesystem::exists(CheckPath))
+	{
+		MsgBoxAssert(_ChildPath + "경로를 가진 폴더 또는 파일은 존재하지 않습니다.");
+	}
+
+	return CheckPath.string();
+}
 
 std::string GameEnginePath::GetFileName()
 {
 	return Path.filename().string();
 }
+

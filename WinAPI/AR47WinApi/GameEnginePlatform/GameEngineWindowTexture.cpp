@@ -2,6 +2,9 @@
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineWindow.h"
 
+// TransCopy 내부의 " " 함수를 사용하기 위해 lib를 불러와야함
+#pragma comment(lib, "msimg32.lib")
+
 GameEngineWindowTexture::GameEngineWindowTexture()
 {
 
@@ -61,7 +64,7 @@ void GameEngineWindowTexture::ResLoad(const std::string& _Path)
 
 void GameEngineWindowTexture::ResCreate(const float4& _Scale)
 {
-	// 윈도우 크기와 똑같은 아무것도 없는 빈 이미지를 만듦
+	// 윈도우 크기(_Scale인자)와 똑같은 아무것도 없는 빈 이미지를 만듦
 	HANDLE ImageHandle = CreateCompatibleBitmap(GameEngineWindow::MainWindow.GetHDC(), _Scale.iX(), _Scale.iY());
 
 	if (nullptr == ImageHandle)
@@ -107,20 +110,24 @@ void GameEngineWindowTexture::BitCopy(GameEngineWindowTexture* _CopyTexture, con
 		CopyImageDC, 0, 0, SRCCOPY);
 }
 
+// BackBuffer->TransCopy(FindTexture, GetPos(), Scale, { 0,0 }, FindTexture->GetScale());
+
 void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, int _TransColor)
 {
-	HDC CopyImageDC = _CopyTexture->GetImageDC();
 	// 내 이미지 DC에 복사할 이미지의 DC를 복사함
+	HDC CopyImageDC = _CopyTexture->GetImageDC();
 
+	// ImageDC == BackBuffer
+	// CopyImageDC == 내가 그릴 이미지
 	TransparentBlt(ImageDC,
 		_Pos.iX() - _Scale.ihX(),
 		_Pos.iY() - _Scale.ihY(),
 		_Scale.iX(),
 		_Scale.iY(),
 		CopyImageDC,
-		_OtherPos.iX(), // 카피하려는 이미지의 카피하기를 원하는 위치의 좌상단 X
-		_OtherPos.iY(), // 카피하려는 이미지의 카피하기를 원하는 위치의 좌상단 Y
-		_OtherScale.iX(), // 해당 부분부터 X의 사이즈
-		_OtherScale.iY(), // 해당 부분부터 Y의 사이즈
+		_OtherPos.iX(), // 카피하려는 이미지의 카피하기를 원하는 위치의 좌상단 X << 해당 이미지의 어느 위치부터 복사할것임?? 의 X값
+		_OtherPos.iY(), // 카피하려는 이미지의 카피하기를 원하는 위치의 좌상단 Y << 해당 이미지의 어느 위치부터 복사할것임?? 의 Y값
+		_OtherScale.iX(), // 해당 부분부터 X의 사이즈 << 위의 Pos값에서 X축으로 어느만큼의 크기를 복사할 것인가?
+		_OtherScale.iY(), // 해당 부분부터 Y의 사이즈 << 위의 Pos값에서 Y축으로 어느만큼의 크기를 복사할 것인가?
 		_TransColor);
 }

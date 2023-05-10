@@ -105,6 +105,7 @@ void GameEngineWindow::InitInstance()
     // 윈도우창에 그림을 그리기위한 핸들을 저장
     Hdc = GetDC(hWnd); // == ::GetDC(hWnd);
 
+    // 윈도우창에 직접적으로 무언가가 띄어지는 WindowBuffer
     WindowBuffer = new GameEngineWindowTexture();
     WindowBuffer->ResCreate(Hdc);
 
@@ -236,7 +237,13 @@ void GameEngineWindow::SetPosAndScale(const float4& _Pos, const float4& _Scale)
     SetWindowPos(hWnd, nullptr, 100 + Rc.left, 100, Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
 }
 
+void GameEngineWindow::ClearBackBuffer()
+{
+    Rectangle(BackBuffer->GetImageDC(), 0, 0, BackBuffer->GetScale().iX(), BackBuffer->GetScale().iY());
+}
+
 void GameEngineWindow::DoubleBuffering()
 {
+    // BackBuffer에서 WindowBuffer로 옮길때는 TransCopy를 할 필요가 없음
     WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());
 }

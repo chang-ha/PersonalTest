@@ -49,9 +49,15 @@ public:
 	{
 		return IsDeathValue;
 	}
+
+	void SetOrder(int _Order)
+	{
+		Order = _Order;
+	}
 protected:
 
 private:
+	int Order = 0;
 	// 객체가 업데이트가 되어야 하는지 판별하는 값
 	bool IsUpdateValue = true;	// 기능을 끄고 싶으면 false
 	// 객체를 삭제해야 하는지 판별하는 값

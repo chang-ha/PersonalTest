@@ -51,14 +51,27 @@ public:
 		// GameEngineActor로 ActorType을 upcasting해서 힙 메모리에 동적할당
 		GameEngineActor* NewActor = new ActorType();
 
-		ActorInit(NewActor);
+		ActorInit(NewActor, _Order);
 		GroupList.push_back(NewActor);
 		return dynamic_cast<ActorType*>(NewActor);
+	}
+
+	template<typename ActorType, typename EnumType>
+	ActorType* CreateActor(EnumType _Order)
+	{
+		return CreateActor<ActorType>(static_cast<int>(_Order));
+	}
+
+	GameEngineCamera* GetMainCamera()
+	{
+		return MainCamera;
 	}
 protected:
 
 private:
+	// 화면에 실질적으로 무언가를 보여주기 위한 메인 카메라
 	GameEngineCamera* MainCamera;
+	// UI는 플레이어가 이동해도 가만히 있어야하니 따로 카메라를 둠
 	GameEngineCamera* UICamera;
 
 	// 맵, 플레이어, 몬스터 엑터가 필요하다고(만들어야한다고) 가정
@@ -74,7 +87,7 @@ private:
 	// Key값은 int, Value값은 std::list<GameEngineActor*>가 들어가는 map을 만듦
 	std::map <int, std::list<GameEngineActor*>> AllActors;
 
-	void ActorInit(GameEngineActor* _Actor);
+	void ActorInit(GameEngineActor* _Actor, int _Order);
 
 	// 해당 Level에 존재하는 모든 Actor들을 Update & Render 해줘야함
 	void ActorUpdate(float _Delta);

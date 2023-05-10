@@ -14,7 +14,8 @@ class GameEngineActor : public GameEngineObject
 public:
 	// constructer destructer
 	GameEngineActor();
-	// 자식 클래스의 삭제 연산자가 똑바로 이루어 지기 위해서 virtual로 선언
+
+	// 자식 클래스의 삭제 연산자가 똑바로 이루어 지기 위해서 virtual로 선언 << 자식의 멤버변수 중 std::string이 소멸자가 호출되지 않아 LEAK이 발생하였기 때문
 	virtual ~GameEngineActor();
 
 	// delete function
@@ -33,29 +34,26 @@ public:
 		Pos += _Pos;
 	}
 
-	void SetScale(const float4& _Scale)
-	{
-		Scale = _Scale;
-	}
-
 	float4 GetPos()
 	{
 		return Pos;
 	}
 
-	float4 GetScale()
-	{
-		return Scale;
-	}
-
 	// Actor본인이 나를 나타내는 이미지를 담당해야함
 	// Renderer 하나는 이미지 하나를 띄우는 담당을 하고 있다.
-	GameEngineRenderer* CreateRenderer(const std::string& _ImageName);
+	GameEngineRenderer* CreateRenderer(const std::string& _ImageName, int _Order);
+
+	template <typename EnumType>
+	GameEngineRenderer* CreateRenderer(const std::string& _ImageName, EnumType _Order)
+	{
+		return CreateRenderer(_ImageName, static_cast<int>(_Order));
+	}
 
 	GameEngineLevel* GetLevel()
 	{
 		return Level;
 	}
+
 protected:
 
 private:
@@ -63,8 +61,9 @@ private:
 	GameEngineLevel* Level;
 
 	float4 Pos = float4::ZERO;
-	float4 Scale = float4::ZERO; // 크기는 액터한테 필요없습니다.
 
+	// 캐릭터란 여러 이미지가 뭉쳐서 캐릭터 전체를 보여주는 것 << ex) 몸통, 옷, 이펙트 등등
+	// 각각을 담당하는 Renderer를 list로 관리
 	std::list<GameEngineRenderer*> AllRenderer;
 };
 
