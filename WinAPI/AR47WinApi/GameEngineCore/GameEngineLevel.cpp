@@ -1,5 +1,6 @@
 ﻿#include "GameEngineLevel.h"
 #include "GameEngineCamera.h"
+#include <GameEngineBase/GameEngineDebug.h>
 
 GameEngineLevel::GameEngineLevel()
 {
@@ -84,6 +85,12 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 		const std::list<GameEngineActor*>& Group = _Pair.second;
 		for (GameEngineActor* _Actor : Group)
 		{
+			if (false == _Actor->IsUpdate())
+			{
+				continue;
+			}
+
+			_Actor->AddLiveTime(_Delta);
 			_Actor->Update(_Delta);
 		}
 	}
@@ -93,12 +100,56 @@ void GameEngineLevel::ActorRender()
 {
 	MainCamera->Render();
 
-	//for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
-	//{
-	//	const std::list<GameEngineActor*>& Group = _Pair.second;
-	//	for (GameEngineActor* _Actor : Group)
-	//	{
-	//		_Actor->Render();
-	//	}
-	//}
+	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
+	{
+		const std::list<GameEngineActor*>& Group = _Pair.second;
+		for (GameEngineActor* _Actor : Group)
+		{
+			if (false == _Actor->IsUpdate())
+			{
+				continue;
+			}
+			_Actor->Render();
+		}
+	}
+}
+
+void GameEngineLevel::ActorRelease()
+{
+	MainCamera->Release();
+
+	std::map <int, std::list<GameEngineActor*>>::iterator GroupStartIter = AllActors.begin();
+	std::map <int, std::list<GameEngineActor*>>::iterator GroupEndIter = AllActors.end();
+
+	// 조금이라도 연산을 줄이고 싶으면 위에서 미리 선언하고 아래에서는 대입만 받음 
+	// std::list<GameEngineActor*>::iterator ActorStartIter;
+	// std::list<GameEngineActor*>::iterator ActorEndIter;
+	for (;GroupStartIter != GroupEndIter ; ++GroupStartIter)
+	{
+		std::list<GameEngineActor*>& Group = GroupStartIter->second;
+		std::list<GameEngineActor*>::iterator ObjectStartIter = Group.begin();
+		std::list<GameEngineActor*>::iterator ObjectEndIter = Group.end();
+		// ActorStartIter = Group.begin();
+		// ActorEndIter = Group.end();
+
+		for ( ; ObjectStartIter != ObjectEndIter; )
+		{
+			GameEngineActor* Object = *ObjectStartIter;
+			Object->Release();
+			// 해당 오브젝트가 죽지않은 상태라면 Release를 하지 않음
+			if (false == Object->IsDeath())
+			{
+				++ObjectStartIter;
+				continue;
+			}
+
+			if (nullptr == Object)
+			{
+				MsgBoxAssert("null인 Object는 Release할 수 없습니다.");
+			}
+			delete Object;
+			Object = nullptr;
+			ObjectStartIter = Group.erase(ObjectStartIter);
+		}
+	}
 }

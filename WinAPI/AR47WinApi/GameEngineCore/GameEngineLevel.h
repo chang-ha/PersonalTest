@@ -92,5 +92,6 @@ private:
 	// 해당 Level에 존재하는 모든 Actor들을 Update & Render 해줘야함
 	void ActorUpdate(float _Delta);
 	void ActorRender();
+	void ActorRelease();
 };
 

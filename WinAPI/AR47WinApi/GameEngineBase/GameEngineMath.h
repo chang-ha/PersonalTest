@@ -8,6 +8,10 @@ class float4
 {
 public:
 	static const float4 ZERO;
+	static const float4 LEFT;
+	static const float4 RIGHT;
+	static const float4 UP;
+	static const float4 DOWN;
 
 	// 실수는 기본적으로 오차가 발생할 수 밖에 없음 (부동소수점계산방식)
 	// 그래서 1.0f == 1.0f가 false가 될 수도있음 ( == 이 거의 불가능하다)

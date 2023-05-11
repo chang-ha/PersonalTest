@@ -55,5 +55,17 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera)
 	// 해당 Rednerer의 주인의 Pos + 거기서 얼마나 떨어져 있나(RenderPos)
 	// Render하려는 크기는 얼마나인가?
 	// 그리려는 Texture의 어느 Pos부터 얼마나 Scale만큼 그릴것인가
+
+	// 화면 끝에 도달하면 움직이지 않게 만들려면??
+	// 1. 윈도우 크기의 절반
+	// 2. 로드된 텍스쳐의 위치
+	// 3. 윈도우창이 로드된 텍스의 끝에 도달하면 _Camera에 따라 움직이지 않게 만들어야함
+
 	BackBuffer->TransCopy(Texture, Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale);
+}
+
+bool GameEngineRenderer::IsDeath()
+{
+	// 해당 Renderer가 죽었거나, 해당 Renderer를 담당하는 Actor가 죽었다면 true;
+	return true == GameEngineObject::IsDeath() || Master->IsDeath();
 }

@@ -53,6 +53,8 @@ public:
 
 	// RenderScale을 Texture의 Scale로 설정하는 함수
 	void SetRenderScaleToTexture();
+
+	bool IsDeath() override;
 protected:
 
 private:

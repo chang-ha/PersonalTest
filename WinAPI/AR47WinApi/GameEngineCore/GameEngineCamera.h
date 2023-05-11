@@ -50,5 +50,7 @@ private:
 
 	// 해당 카메라에 들어온 Renderer만 Render하는 구조로 작성
 	void Render();
+
+	void Release();
 };
 

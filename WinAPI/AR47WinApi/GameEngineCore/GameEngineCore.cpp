@@ -71,6 +71,9 @@ void GameEngineCore::CoreUpdate()
 	CurLevel->Render();
 	CurLevel->ActorRender();
 	GameEngineWindow::MainWindow.DoubleBuffering();
+
+	// 한프레임이 모두 끝나면 그떄 Release()
+	CurLevel->ActorRelease();
 }
 
 void GameEngineCore::CoreEnd()

@@ -2,8 +2,10 @@
 
 // 설명 : 모든 기본적인 행동을 제안하는 클래스
 // 제안하는 클래스 (제안 : virtual을 만들건데, 자식이 따로 구현을 할 것인지는 선택임)
+class GameEngineLevel;
 class GameEngineObject
 {
+	friend GameEngineLevel;
 public:
 	// constructer destructer
 	GameEngineObject();
@@ -39,13 +41,18 @@ public:
 		IsUpdateValue = false;
 	}
 
+	void Death()
+	{
+		IsDeathValue = true;
+	}
+
 	// 객체의 UpdateValue가 true이고, DeathValue가 false면 업데이트를 해라
 	bool IsUpdate()
 	{
 		return true == IsUpdateValue && false == IsDeathValue;
 	}
 
-	bool IsDeath()
+	virtual bool IsDeath()
 	{
 		return IsDeathValue;
 	}
@@ -53,6 +60,16 @@ public:
 	void SetOrder(int _Order)
 	{
 		Order = _Order;
+	}
+
+	float GetLiveTime()
+	{
+		return LiveTime;
+	}
+
+	void ResetLiveTime()
+	{
+		LiveTime = 0.0f;
 	}
 protected:
 
@@ -62,5 +79,12 @@ private:
 	bool IsUpdateValue = true;	// 기능을 끄고 싶으면 false
 	// 객체를 삭제해야 하는지 판별하는 값
 	bool IsDeathValue = false;	// 메모리에서 날려버리고 싶으면 true
+	// 해당 오브젝트가 살아있는 시간을 체크
+	float LiveTime = 0.0f;
+
+	void AddLiveTime(float _DeltaTime)
+	{
+		LiveTime += _DeltaTime;
+	}
 };
 

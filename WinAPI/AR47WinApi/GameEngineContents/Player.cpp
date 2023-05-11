@@ -8,6 +8,7 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
+#include "Bullet.h"
 
 Player::Player()
 {
@@ -74,6 +75,17 @@ void Player::Update(float _Delta)
 	{
 		MovePos = { 0.0f, Speed * _Delta};
 	}
+
+	if (0 != GetAsyncKeyState('F'))
+	{
+		Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
+		NewBullet->Renderer->SetTexture("Player.Bmp");
+
+		// 방향을 표현하는 X, Y는 크기가 1
+		NewBullet->SetDir(float4::RIGHT);
+		NewBullet->SetPos(GetPos());
+	}
+
 	AddPos(MovePos);
 	GetLevel()->GetMainCamera()->AddPos(MovePos);
 }

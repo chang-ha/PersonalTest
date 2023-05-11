@@ -49,6 +49,18 @@ public:
 		return CreateRenderer(_ImageName, static_cast<int>(_Order));
 	}
 
+	// Texture를 로딩하지 않은 Renderer를 만들어줌
+	template <typename EnumType>
+	GameEngineRenderer* CreateRenderer(EnumType _Order)
+	{
+		return CreateRenderer("", static_cast<int>(_Order));
+	}
+
+	GameEngineRenderer* CreateRenderer(int _Order = 0)
+	{
+		return CreateRenderer("", _Order);
+	}
+
 	GameEngineLevel* GetLevel()
 	{
 		return Level;
